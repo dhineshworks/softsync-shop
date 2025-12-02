@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftSync - Adobe Creative Cloud Plans</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- dev: minor update - added harmless comment to create a test commit -->
+    <!-- Font Awesome for consistent icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- Header with Social Links -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="softsync.png" alt="SoftSync" class="logo-image">
+                <span class="logo-text">SoftSync</span>
+            </div>
+            <div class="social-links">
+                <a href="#facebook" class="social-btn" id="facebook-btn"><i class="fa-brands fa-facebook-f social-icon" aria-hidden="true"></i> Facebook</a>
+                <a href="#instagram" class="social-btn" id="instagram-btn"><i class="fa-brands fa-instagram social-icon" aria-hidden="true"></i> Instagram</a>
+                <a href="#whatsapp" class="social-btn" id="whatsapp-btn"><i class="fa-brands fa-whatsapp social-icon" aria-hidden="true"></i> WhatsApp</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>SoftSync - Your Creative Partner</h1>
+            <p>Professional Adobe Creative Cloud Plans at Unbeatable Prices</p>
+            <div class="trust-badges">
+                <div class="badge">
+                    <span class="badge-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
+                    <span>Licensed & Official</span>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
+                    <span>Instant Activation</span>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon"><i class="fa-solid fa-handshake" aria-hidden="true"></i></span>
+                    <span>Expert Support</span>
+                </div>
+                <div class="badge">
+                    <span class="badge-icon"><i class="fa-solid fa-certificate" aria-hidden="true"></i></span>
+                    <span>Full 1 Year Access</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="plans-section">
+        <h2 class="section-title">Choose Your Plan</h2>
+        <div class="plans-grid">
+            <!-- Plan 1: Standard -->
+            <div class="plan-card">
+                <div class="plan-badge">Standard Plan</div>
+                <div class="plan-header">
+                    <div class="plan-name">Standard</div>
+                    <p class="plan-description">Perfect for individual creators</p>
+                    <div class="plan-price">₹3,000</div>
+                    <p class="plan-price-subtitle">1 Year Full Access</p>
+                </div>
+                <div class="plan-content">
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>Photoshop & Lightroom 20+ Apps</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>10000 AI Credits Per Month</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>Premiere Pro & After Effects</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>100GB Cloud Storage</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>Stock Library Access</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>Email Support</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-primary" onclick="buyNow('Standard')">Buy Now</button>
+                    <button class="btn btn-secondary" onclick="contactViaWhatsApp('Standard')">WhatsApp</button>
+                </div>
+            </div>
+
+            <!-- Plan 2: Pro Plus (Featured) -->
+            <div class="plan-card featured">
+                <div class="plan-badge">Most Popular</div>
+                <div class="plan-header">
+                    <div class="plan-name">Pro Plus</div>
+                    <p class="plan-description">For professional teams</p>
+                    <div class="plan-price">₹3,350</div>
+                    <p class="plan-price-subtitle">1 Year Full Access</p>
+                </div>
+                <div class="plan-content">
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>All Standard Features</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>FireFly Video Generations</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>4000 AI Credits Per Month</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>1TB Cloud Storage</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>Advanced AI Features(Nano Banana)</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <span>Priority Support 24/7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="plan-footer">
+                    <button class="btn btn-secondary" onclick="buyNow('Pro Plus')">Buy Now</button>
+                    <button class="btn btn-primary" onclick="contactViaWhatsApp('Pro Plus')">WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <h2 class="section-title">Why Choose SoftSync?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></div>
+                <h3>Licensed & Official</h3>
+                <p>100% authentic Adobe licenses with official activation. No trials, no sharing, fully yours for 1 year.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+                <h3>Instant Activation</h3>
+                <p>Get your license activated within minutes. Start using Adobe Creative Cloud immediately after purchase.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
+                <h3>24/7 Support</h3>
+                <p>Expert support via WhatsApp, Email & Instagram. We help you with setup, troubleshooting, and more.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fa-solid fa-credit-card" aria-hidden="true"></i></div>
+                <h3>Secure Payment</h3>
+                <p>Multiple payment options including UPI, card, and direct transfer. Your transaction is completely safe.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fa-solid fa-star" aria-hidden="true"></i></div>
+                <h3>Full Feature Access</h3>
+                <p>Access all creative apps, updates, and new features released during your 1-year subscription.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+                <h3>Community & Resources</h3>
+                <p>Join our community of creative professionals. Get exclusive tutorials and resources from experts.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <h2 class="contact-title">Get in Touch & Buy Today</h2>
+            <p class="contact-subtitle">Choose your preferred communication method. We respond within minutes!</p>
+            
+            <div class="contact-methods">
+                <!-- WhatsApp -->
+                <div class="contact-method">
+                    <div class="contact-method-icon"><i class="fa-brands fa-whatsapp contact-icon" aria-hidden="true"></i></div>
+                    <h3>WhatsApp</h3>
+                    <p>Quick replies and instant support for all your queries</p>
+                    <button class="contact-link" onclick="openWhatsApp()">Message on WhatsApp</button>
+                </div>
+
+                <!-- Instagram -->
+                <div class="contact-method">
+                    <div class="contact-method-icon"><i class="fa-brands fa-instagram contact-icon" aria-hidden="true"></i></div>
+                    <h3>Instagram</h3>
+                    <p>Follow for updates, deals, and creative inspiration</p>
+                    <button class="contact-link" onclick="openInstagram()">Follow on Instagram</button>
+                </div>
+
+                <!-- Facebook -->
+                <div class="contact-method">
+                    <div class="contact-method-icon"><i class="fa-brands fa-facebook-f contact-icon" aria-hidden="true"></i></div>
+                    <h3>Facebook</h3>
+                    <p>Like & follow our page for exclusive deals</p>
+                    <button class="contact-link" onclick="openFacebook()">Visit Facebook</button>
+                </div>
+
+                <!-- Email -->
+                <div class="contact-method">
+                    <div class="contact-method-icon"><i class="fa-solid fa-envelope contact-icon" aria-hidden="true"></i></div>
+                    <h3>Email</h3>
+                    <p>Send detailed queries to our support team</p>
+                    <button class="contact-link" onclick="openEmail()">Send Email</button>
+                </div>
+            </div>
+
+            <p style="font-size: 14px; opacity: 0.8;"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> Use the contact buttons above to reach us directly!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p style="margin-bottom: 20px;">© 2024 SoftSync. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">FAQ</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">SoftSync is an authorized reseller of Adobe Creative Cloud licenses.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
