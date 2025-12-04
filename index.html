@@ -26,7 +26,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero animate-on-scroll">
         <div class="hero-container">
             <h1>SoftSync - Your Creative Partner</h1>
             <p>Professional Adobe Creative Cloud Plans at Unbeatable Prices</p>
@@ -52,12 +52,15 @@
     </section>
 
     <!-- Plans Section -->
-    <section class="plans-section">
+    <section class="plans-section animate-on-scroll">
         <h2 class="section-title">Choose Your Plan</h2>
         <div class="plans-grid">
             <!-- Plan 1: Standard -->
-            <div class="plan-card">
+            <div class="plan-card animate-on-scroll tilt">
                 <div class="plan-badge">Standard Plan</div>
+                <div class="plan-image">
+                    <img src="adobe standard.jpg" alt="Plan name">
+                </div>
                 <div class="plan-header">
                     <div class="plan-name">Standard</div>
                     <p class="plan-description">Perfect for individual creators</p>
@@ -99,8 +102,9 @@
             </div>
 
             <!-- Plan 2: Pro Plus (Featured) -->
-            <div class="plan-card featured">
+            <div class="plan-card featured animate-on-scroll tilt">
                 <div class="plan-badge">Most Popular</div>
+                <div class="plan-image"><img src="adobe pro plus.jpg" alt="plan-image"></div>
                 <div class="plan-header">
                     <div class="plan-name">Pro Plus</div>
                     <p class="plan-description">For professional teams</p>
@@ -144,7 +148,7 @@
     </section>
 
     <!-- Benefits Section -->
-    <section class="benefits-section">
+    <section class="benefits-section animate-on-scroll">
         <h2 class="section-title">Why Choose SoftSync?</h2>
         <div class="benefits-grid">
             <div class="benefit-card">
@@ -181,7 +185,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact-section">
+    <section class="contact-section animate-on-scroll">
         <div class="contact-container">
             <h2 class="contact-title">Get in Touch & Buy Today</h2>
             <p class="contact-subtitle">Choose your preferred communication method. We respond within minutes!</p>
@@ -239,5 +243,16 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- Mascot / Assistant -->
+    <div id="mascot" aria-hidden="false" role="button" tabindex="0" title="Assistant">
+        <img src="softsync.png" alt="SoftSync assistant" />
+        <div id="mascot-bubble" class="hidden">Need help? Tap to buy a plan</div>
+        <div id="mascot-menu" class="hidden" aria-hidden="true">
+            <button class="mascot-option" data-plan="Standard">Buy Standard</button>
+            <button class="mascot-option" data-plan="Pro Plus">Buy Pro Plus</button>
+            <button class="mascot-option" data-plan="Envato Elements">Buy Envato</button>
+        </div>
+    </div>
 </body>
 </html>

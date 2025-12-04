@@ -232,6 +232,169 @@ header {
     letter-spacing: 1px;
 }
 
+/* Image placeholder for plan cards */
+.plan-image {
+    margin: 0 auto;
+    width: 100%;
+    height: 380px;
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.plan-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+.plan-card:hover .plan-image {
+    transform: scale(1.03);
+}
+
+.plan-card:hover .plan-image img {
+    transform: scale(1.08);
+    filter: brightness(1.05) saturate(1.03);
+}
+
+/* Reveal on scroll utilities */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Subtle tilt effect for cards */
+.plan-card.tilt {
+    transform-origin: center center;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.plan-card.tilt:hover {
+    transform: perspective(800px) translateY(-6px) rotateX(2deg) rotateY(0.6deg);
+    box-shadow: 0 18px 40px rgba(13, 71, 161, 0.12);
+}
+
+/* Header elevation on scroll */
+header.scrolled {
+    box-shadow: 0 10px 30px rgba(2,6,23,0.15);
+    backdrop-filter: blur(6px);
+}
+
+/* Button ripple */
+.btn, .contact-link {
+    position: relative;
+    overflow: hidden;
+}
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    background: rgba(255,255,255,0.35);
+    animation: ripple-effect 600ms linear;
+}
+@keyframes ripple-effect {
+    to { transform: scale(4); opacity: 0; }
+}
+
+/* Mascot styles */
+#mascot {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 84px;
+    height: 84px;
+    z-index: 1200;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#mascot img {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.15);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    animation: mascot-float 4s ease-in-out infinite;
+}
+#mascot:hover img { transform: translateY(-6px) scale(1.02); }
+
+@keyframes mascot-float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+#mascot-bubble {
+    position: absolute;
+    bottom: 96px;
+    right: 0;
+    background: rgba(8,18,46,0.95);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    box-shadow: 0 8px 24px rgba(2,6,23,0.18);
+    white-space: nowrap;
+    transform-origin: right bottom;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#mascot-menu {
+    position: absolute;
+    bottom: 110px;
+    right: 0;
+    background: white;
+    color: var(--color-text);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 12px 36px rgba(2,6,23,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 160px;
+}
+
+.mascot-option {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #e6eef9;
+    background: linear-gradient(180deg,#fff,#f7fbff);
+    cursor: pointer;
+    font-weight: 600;
+}
+.mascot-option:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20,115,230,0.08); }
+
+.hidden { display: none !important; }
+
+/* Highlight/pulse for selected plan */
+.plan-highlight {
+    animation: plan-pulse 1.2s ease-in-out 0s 2;
+    box-shadow: 0 18px 40px rgba(20,115,230,0.16);
+    transform: translateY(-6px);
+}
+@keyframes plan-pulse {
+    0% { box-shadow: 0 6px 18px rgba(20,115,230,0.06); }
+    50% { box-shadow: 0 24px 48px rgba(20,115,230,0.18); }
+    100% { box-shadow: 0 6px 18px rgba(20,115,230,0.06); }
+}
+
 .plan-header {
     padding: 30px 25px 20px;
     background: linear-gradient(135deg, #f8f9fa 0%, #e8eef5 100%);

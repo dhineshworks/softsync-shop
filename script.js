@@ -77,24 +77,115 @@ document.addEventListener('DOMContentLoaded', function() {
     addScrollAnimations();
 });
 
-// Add scroll animations to cards
+// Mascot interactions
+document.addEventListener('DOMContentLoaded', function () {
+    const mascot = document.getElementById('mascot');
+    const bubble = document.getElementById('mascot-bubble');
+    const menu = document.getElementById('mascot-menu');
+
+    if (!mascot) return;
+
+    // show bubble on hover/focus
+    mascot.addEventListener('mouseenter', () => {
+        if (bubble) bubble.classList.remove('hidden');
+    });
+    mascot.addEventListener('mouseleave', () => {
+        if (bubble) bubble.classList.add('hidden');
+    });
+
+    mascot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (menu) {
+            const shown = !menu.classList.contains('hidden');
+            if (shown) {
+                menu.classList.add('hidden');
+                menu.setAttribute('aria-hidden', 'true');
+            } else {
+                menu.classList.remove('hidden');
+                menu.setAttribute('aria-hidden', 'false');
+            }
+        }
+    });
+
+    // close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!mascot.contains(e.target) && menu && !menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+            menu.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    // menu plan buttons
+    const options = document.querySelectorAll('.mascot-option');
+    options.forEach(btn => {
+        btn.addEventListener('click', (ev) => {
+            const plan = btn.getAttribute('data-plan');
+            // find matching plan card by plan name
+            const cards = Array.from(document.querySelectorAll('.plan-card'));
+            const target = cards.find(c => c.innerText.includes(plan));
+            if (target) {
+                // scroll to card and highlight
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.classList.add('plan-highlight');
+                setTimeout(() => { target.classList.remove('plan-highlight'); }, 1600);
+            }
+            // small delay then call buyNow
+            setTimeout(() => { buyNow(plan); }, 900);
+            // hide menu
+            if (menu) { menu.classList.add('hidden'); menu.setAttribute('aria-hidden', 'true'); }
+        });
+    });
+});
+
+// Add scroll animations to elements with .animate-on-scroll
 function addScrollAnimations() {
-    const cards = document.querySelectorAll('.plan-card, .benefit-card');
-    
+    const animated = document.querySelectorAll('.animate-on-scroll');
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.animation = 'slideUp 0.6s ease forwards';
+                entry.target.classList.add('in-view');
             }
         });
     }, {
-        threshold: 0.1
+        threshold: 0.12
     });
 
-    cards.forEach((card) => {
-        card.style.opacity = '0';
-        observer.observe(card);
+    animated.forEach((el) => {
+        // ensure initial state
+        el.classList.remove('in-view');
+        observer.observe(el);
+    });
+
+    // add header scroll shadow
+    const header = document.querySelector('header');
+    if (header) {
+        const onScroll = () => {
+            if (window.scrollY > 20) header.classList.add('scrolled'); else header.classList.remove('scrolled');
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    // add ripple effect to buttons
+    addButtonRipples();
+}
+
+// Ripple effect for clickable buttons
+function addButtonRipples() {
+    const buttons = document.querySelectorAll('.btn, .contact-link');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            const rect = this.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            const size = Math.max(rect.width, rect.height) * 1.2;
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            this.appendChild(ripple);
+            setTimeout(() => { ripple.remove(); }, 650);
+        });
     });
 }
 
