@@ -680,12 +680,12 @@ footer {
 
     .social-links {
         width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
      
         
-            .plan-image {
-        height: 180px;
-    }justify-content: center;
-        flex-wrap: wrap;
+    .plan-image {        height: 180px;
     }
 
     .section-title {
