@@ -1024,25 +1024,26 @@ footer {
         width: 100%;
     }
 
-    <<<<<<< HEAD .plan-image {
-        =======.plan-image {
-            >>>>>>>48e3cf057672962cfa6396dec2d251976925003d height: 160px;
-        }
-
-        .hero {
-            padding: 40px 20px;
-        }
-
-        .social-links {
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .social-btn {
-            width: 100%;
-        }
-
-        .contact-methods {
-            grid-template-columns: 1fr;
-        }
+    .plan-image {
+        height: 160px;
+        padding: 10px;
+        /* Reduce padding slightly for mobile so image isn't too tiny */
     }
+
+    .hero {
+        padding: 40px 20px;
+    }
+
+    .social-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .social-btn {
+        width: 100%;
+    }
+
+    .contact-methods {
+        grid-template-columns: 1fr;
+    }
+}
