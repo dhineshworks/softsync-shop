@@ -8,8 +8,12 @@ const CONTACT_CONFIG = {
 
 // WhatsApp integration
 function contactViaWhatsApp(planType) {
-    const price = planType === 'Standard' ? '3,000' : '3,350';
-    const message = `Hi SoftSync! I'm interested in the ${planType} Adobe Creative Cloud plan (₹${price}). Can you provide more details and process my order?`;
+    let price = '';
+    if (planType === 'Standard') price = '3,000';
+    else if (planType === 'Pro Plus') price = '3,350';
+    else if (planType === 'Canva Pro') price = '199'; // Placeholder price
+
+    const message = `Hi SoftSync! I'm interested in the ${planType} plan (₹${price}). Can you provide more details and process my order?`;
     openWhatsApp(message);
 }
 
@@ -39,13 +43,17 @@ function openEmail() {
 
 // Buy Now function
 function buyNow(planType) {
-    const price = planType === 'Standard' ? '3,000' : '3,350';
+    let price = '';
+    if (planType === 'Standard') price = '3,000';
+    else if (planType === 'Pro Plus') price = '3,350';
+    else if (planType === 'Canva Pro') price = '199'; // Placeholder price
+
     const message = `Hi SoftSync! I want to buy the ${planType} plan (₹${price}). How can I proceed with the payment?`;
-    contactViaWhatsApp(message);
+    openWhatsApp(message);
 }
 
 // Setup social media buttons in header
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // WhatsApp button
     const whatsappBtn = document.getElementById('whatsapp-btn');
     if (whatsappBtn) {
@@ -189,9 +197,50 @@ function addButtonRipples() {
     });
 }
 
-// Add animation CSS dynamically
-const style = document.createElement('style');
-style.textContent = `
+// Theme Toggle Logic
+document.addEventListener('DOMContentLoaded', function () {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
+
+    // Check for saved user preference, if any, on load of the website
+    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        if (currentTheme === 'dark') {
+            if (themeIcon) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function () {
+            let theme = document.documentElement.getAttribute('data-theme');
+
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
+            }
+        });
+    }
+
+    // Add animation CSS dynamically
+    const style = document.createElement('style');
+    style.textContent = `
     @keyframes slideUp {
         from {
             opacity: 0;
@@ -203,10 +252,11 @@ style.textContent = `
         }
     }
 `;
-document.head.appendChild(style);
+    document.head.appendChild(style);
 
-// Prevent accidental form submissions
-document.addEventListener('submit', function(e) {
-    e.preventDefault();
-    return false;
-}, true);
+    // Prevent accidental form submissions
+    document.addEventListener('submit', function (e) {
+        e.preventDefault();
+        return false;
+    }, true);
+});
