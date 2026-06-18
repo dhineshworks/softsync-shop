@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoftSync - Adobe Creative Cloud Plans</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,11 +19,19 @@
 </head>
 
 <body>
+    <!-- Global Unified Navigation -->
+    <nav class="global-nav">
+        <div class="global-nav-container">
+            <a href="index.html" class="global-nav-link active"><i class="fa-solid fa-store"></i> Shop Home</a>
+            <a href="admin/index.html" class="global-nav-link"><i class="fa-solid fa-lock"></i> Admin Panel</a>
+        </div>
+    </nav>
+
     <!-- Header with Social Links -->
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="softsync.png" alt="SoftSync" class="logo-image">
+                <img src="assets/images/softsync.png" alt="SoftSync" class="logo-image">
                 <span class="logo-text">SoftSync</span>
             </div>
             <div class="social-links">
@@ -31,7 +39,8 @@
                     <i class="fa-solid fa-moon"></i>
                 </button>
                 <a href="#free-canva-section" class="social-btn gift-btn" id="gift-nav-btn">
-                    <i class="fa-solid fa-gift gift-icon" aria-hidden="true" style="color: #FF5A79;"></i> Get Free Canva 🎁
+                    <i class="fa-solid fa-gift gift-icon" aria-hidden="true" style="color: #FF5A79;"></i> Get Free Canva
+                    🎁
                 </a>
                 <a href="#facebook" class="social-btn" id="facebook-btn"><i class="fa-brands fa-facebook-f social-icon"
                         aria-hidden="true"></i> Facebook</a>
@@ -77,7 +86,7 @@
             <div class="plan-card animate-on-scroll tilt">
                 <div class="plan-badge">Standard Plan</div>
                 <div class="plan-image">
-                    <img src="adobe standard.jpg" alt="Plan name">
+                    <img src="assets/images/adobe standard.png" alt="Plan name">
                 </div>
                 <div class="plan-header">
                     <div class="plan-name">Standard</div>
@@ -122,7 +131,7 @@
             <!-- Plan 2: Pro Plus (Featured) -->
             <div class="plan-card featured animate-on-scroll tilt">
                 <div class="plan-badge">Most Popular</div>
-                <div class="plan-image"><img src="adobe pro plus.jpg" alt="plan-image"></div>
+                <div class="plan-image"><img src="assets/images/adobe pro plus.png" alt="plan-image"></div>
                 <div class="plan-header">
                     <div class="plan-name">Pro Plus</div>
                     <p class="plan-description">For professional teams</p>
@@ -198,7 +207,7 @@
                         </div>
                         <div class="feature">
                             <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-                            <span>Offical license</span>
+                            <span>Official license</span>
                         </div>
                     </div>
                 </div>
@@ -257,7 +266,8 @@
         <div class="feedback-container">
             <div class="feedback-badge"><i class="fa-solid fa-gift animate-pulse"></i> Limited Time Offer</div>
             <h2 class="section-title">Claim Canva Pro for Free!</h2>
-            <p class="section-subtitle">We value your opinion. Share your feedback about SoftSync and get instant access to 1 Year of Canva Pro for free! 🎁</p>
+            <p class="section-subtitle">We value your opinion. Share your feedback about SoftSync and get instant access
+                to 1 Year of Canva Pro for free! 🎁</p>
 
             <div class="feedback-card-wrapper">
                 <!-- Feedback Form Card -->
@@ -265,40 +275,52 @@
                     <form id="canva-feedback-form" novalidate>
                         <div class="form-grid">
                             <div class="form-group">
-                                <label for="feedback-email" class="form-label">Email Address <span class="required">*</span></label>
+                                <label for="feedback-email" class="form-label">Email Address <span
+                                        class="required">*</span></label>
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-envelope input-icon"></i>
-                                    <input type="email" id="feedback-email" name="email" class="form-input" placeholder="name@example.com" required>
+                                    <input type="email" id="feedback-email" name="email" class="form-input"
+                                        placeholder="name@example.com" required>
                                 </div>
                                 <span class="error-message" id="email-error">Please enter a valid email address.</span>
                             </div>
 
                             <div class="form-group">
-                                <label for="feedback-phone" class="form-label">Phone Number <span class="required">*</span></label>
+                                <label for="feedback-phone" class="form-label">Phone Number <span
+                                        class="required">*</span></label>
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-phone input-icon"></i>
-                                    <input type="tel" id="feedback-phone" name="phone" class="form-input" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
+                                    <input type="tel" id="feedback-phone" name="phone" class="form-input"
+                                        placeholder="10-digit mobile number" required pattern="[0-9]{10}">
                                 </div>
-                                <span class="error-message" id="phone-error">Please enter a valid 10-digit mobile number.</span>
+                                <span class="error-message" id="phone-error">Please enter a valid 10-digit mobile
+                                    number.</span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">Rate Your Experience <span class="required">*</span></label>
                             <div class="star-rating" role="radiogroup" aria-label="Rating experience">
-                                <button type="button" class="star-btn" data-rating="1" aria-label="1 Star"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" class="star-btn" data-rating="2" aria-label="2 Stars"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" class="star-btn" data-rating="3" aria-label="3 Stars"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" class="star-btn" data-rating="4" aria-label="4 Stars"><i class="fa-solid fa-star"></i></button>
-                                <button type="button" class="star-btn" data-rating="5" aria-label="5 Stars"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" class="star-btn" data-rating="1" aria-label="1 Star"><i
+                                        class="fa-solid fa-star"></i></button>
+                                <button type="button" class="star-btn" data-rating="2" aria-label="2 Stars"><i
+                                        class="fa-solid fa-star"></i></button>
+                                <button type="button" class="star-btn" data-rating="3" aria-label="3 Stars"><i
+                                        class="fa-solid fa-star"></i></button>
+                                <button type="button" class="star-btn" data-rating="4" aria-label="4 Stars"><i
+                                        class="fa-solid fa-star"></i></button>
+                                <button type="button" class="star-btn" data-rating="5" aria-label="5 Stars"><i
+                                        class="fa-solid fa-star"></i></button>
                             </div>
                             <input type="hidden" id="feedback-rating" name="rating" required value="">
                             <span class="error-message" id="rating-error">Please select a rating.</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="feedback-comments" class="form-label">Your Feedback <span class="optional">(Optional)</span></label>
-                            <textarea id="feedback-comments" name="comments" class="form-textarea" placeholder="Tell us what you like about SoftSync or how we can improve..."></textarea>
+                            <label for="feedback-comments" class="form-label">Your Feedback <span
+                                    class="optional">(Optional)</span></label>
+                            <textarea id="feedback-comments" name="comments" class="form-textarea"
+                                placeholder="Tell us what you like about SoftSync or how we can improve..."></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-submit-feedback">
@@ -317,13 +339,14 @@
                         </div>
                         <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
                     </div>
-                    
+
                     <h3>Thank You for Your Feedback!</h3>
-                    <p class="success-lead">Your feedback has been submitted successfully. As promised, here is your 1-Year Canva Pro Access!</p>
-                    
+                    <p class="success-lead">Your feedback has been submitted successfully. As promised, here is your
+                        1-Year Canva Pro Access!</p>
+
                     <div class="reward-box">
                         <div class="reward-logo">
-                            <img src="pngwing.com.png" alt="Canva Pro logo">
+                            <img src="assets/images/pngwing.com.png" alt="Canva Pro logo">
                             <span>Canva Pro 1-Year Access</span>
                         </div>
                         <div class="reward-instructions">
@@ -338,14 +361,17 @@
                             <i class="fa-solid fa-rocket"></i> Activate Canva Pro Now
                         </a>
                     </div>
-                    
-                    <p class="reward-help">Need help? <a href="#" onclick="openWhatsApp('Hi SoftSync, I submitted feedback but need help activating my free Canva Pro.')">Contact support on WhatsApp</a></p>
+
+                    <p class="reward-help">Need help? <a href="#"
+                            onclick="openWhatsApp('Hi SoftSync, I submitted feedback but need help activating my free Canva Pro.')">Contact
+                            support on WhatsApp</a></p>
                 </div>
             </div>
 
             <!-- Feedbacks Wall (Wall of Love) -->
             <div class="feedbacks-wall animate-on-scroll" id="feedbacks-wall-section">
-                <h3 class="wall-title"><i class="fa-solid fa-comments" style="color: #8B5CF6;"></i> What Our Creators Say</h3>
+                <h3 class="wall-title"><i class="fa-solid fa-comments" style="color: #8B5CF6;"></i> What Our Creators
+                    Say</h3>
                 <div class="feedbacks-grid" id="feedbacks-display-grid">
                     <!-- Feedbacks will load dynamically here -->
                 </div>
@@ -361,39 +387,39 @@
 
             <div class="contact-methods">
                 <!-- WhatsApp -->
-                <div class="contact-method">
+                <div class="contact-card">
                     <div class="contact-method-icon"><i class="fa-brands fa-whatsapp contact-icon"
                             aria-hidden="true"></i></div>
-                    <h3>WhatsApp</h3>
-                    <p>Quick replies and instant support for all your queries</p>
-                    <button class="contact-link" onclick="openWhatsApp()">Message on WhatsApp</button>
+                    <h3 class="contact-method-title">WhatsApp</h3>
+                    <p class="contact-method-desc">Quick replies and instant support for all your queries</p>
+                    <button class="btn btn-primary" onclick="openWhatsApp()">Message on WhatsApp</button>
                 </div>
 
                 <!-- Instagram -->
-                <div class="contact-method">
+                <div class="contact-card">
                     <div class="contact-method-icon"><i class="fa-brands fa-instagram contact-icon"
                             aria-hidden="true"></i></div>
-                    <h3>Instagram</h3>
-                    <p>Follow for updates, deals, and creative inspiration</p>
-                    <button class="contact-link" onclick="openInstagram()">Follow on Instagram</button>
+                    <h3 class="contact-method-title">Instagram</h3>
+                    <p class="contact-method-desc">Follow for updates, deals, and creative inspiration</p>
+                    <button class="btn btn-secondary" onclick="openInstagram()">Follow on Instagram</button>
                 </div>
 
                 <!-- Facebook -->
-                <div class="contact-method">
+                <div class="contact-card">
                     <div class="contact-method-icon"><i class="fa-brands fa-facebook-f contact-icon"
                             aria-hidden="true"></i></div>
-                    <h3>Facebook</h3>
-                    <p>Like & follow our page for exclusive deals</p>
-                    <button class="contact-link" onclick="openFacebook()">Visit Facebook</button>
+                    <h3 class="contact-method-title">Facebook</h3>
+                    <p class="contact-method-desc">Like & follow our page for exclusive deals</p>
+                    <button class="btn btn-secondary" onclick="openFacebook()">Visit Facebook</button>
                 </div>
 
                 <!-- Email -->
-                <div class="contact-method">
+                <div class="contact-card">
                     <div class="contact-method-icon"><i class="fa-solid fa-envelope contact-icon"
                             aria-hidden="true"></i></div>
-                    <h3>Email</h3>
-                    <p>Send detailed queries to our support team</p>
-                    <button class="contact-link" onclick="openEmail()">Send Email</button>
+                    <h3 class="contact-method-title">Email</h3>
+                    <p class="contact-method-desc">Send detailed queries to our support team</p>
+                    <button class="btn btn-secondary" onclick="openEmail()">Send Email</button>
                 </div>
             </div>
 
@@ -411,6 +437,7 @@
                 <a href="#" class="footer-link">Terms of Service</a>
                 <a href="#" class="footer-link">Contact</a>
                 <a href="#" class="footer-link">FAQ</a>
+                <a href="admin/index.html" class="footer-link">Admin Panel</a>
             </div>
             <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">SoftSync is an authorized reseller of Adobe
                 Creative Cloud licenses.</p>
@@ -418,11 +445,11 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="assets/js/script.js"></script>
 
     <!-- Mascot / Assistant -->
     <div id="mascot" aria-hidden="false" role="button" tabindex="0" title="Assistant">
-        <img src="softsync.png" alt="SoftSync assistant" />
+        <img id="mascot-img" src="assets/images/mascot_neutral.png" alt="SoftSync assistant" />
         <div id="mascot-bubble" class="hidden">Need help? Tap to buy a plan</div>
         <div id="mascot-menu" class="hidden" aria-hidden="true">
             <button class="mascot-option" data-plan="Standard">Buy Standard</button>

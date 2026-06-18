@@ -21,7 +21,7 @@ const FALLBACK_PLANS = [
         description: 'Perfect for individual creators',
         price: 3000,
         price_subtitle: '1 Year Full Access',
-        image_url: 'adobe standard.jpg',
+        image_url: 'assets/images/adobe standard.png',
         image_alt: 'Adobe Standard plan',
         features: [
             'Photoshop & Lightroom 20+ Apps',
@@ -42,7 +42,7 @@ const FALLBACK_PLANS = [
         description: 'For professional teams',
         price: 3350,
         price_subtitle: '1 Year Full Access',
-        image_url: 'adobe pro plus.jpg',
+        image_url: 'assets/images/adobe pro plus.png',
         image_alt: 'Adobe Pro Plus plan',
         features: [
             'All Standard Features',
@@ -63,7 +63,7 @@ const FALLBACK_PLANS = [
         description: 'Design like a pro',
         price: 199,
         price_subtitle: '1 Year Full Access',
-        image_url: 'pngwing.com.png',
+        image_url: 'assets/images/pngwing.com.png',
         image_alt: 'Canva Pro',
         features: [
             '100+ Million Premium Assets',
@@ -249,8 +249,12 @@ async function buyNow(planType) {
     const priceText = plan ? formatPrice(plan.price) : '';
     const message = `Hi SoftSync! I want to buy the ${planType} plan (${priceText}). How can I proceed with the payment?`;
 
+    if (typeof setMascotState === 'function') {
+        setMascotState('happy', `Great choice! Setting up your ${planType} order...`);
+    }
+
     await saveOrderIntent(plan, 'buy_now');
-    openWhatsApp(message);
+    setTimeout(() => { openWhatsApp(message); }, 800);
 }
 
 function setupContactButtons() {
@@ -334,6 +338,50 @@ function setupMascotOptions() {
     });
 }
 
+let mascotResetTimeout;
+
+function setMascotState(state, message) {
+    const mascotImg = document.getElementById('mascot-img');
+    const bubble = document.getElementById('mascot-bubble');
+    if (!mascotImg || !bubble) return;
+
+    // Remove existing states
+    mascotImg.classList.remove('mascot-happy', 'mascot-error', 'mascot-thinking');
+    bubble.classList.remove('state-happy', 'state-error', 'state-thinking');
+
+    if (state === 'happy') {
+        mascotImg.src = 'assets/images/mascot_happy.png';
+        mascotImg.classList.add('mascot-happy');
+        bubble.classList.add('state-happy');
+    } else if (state === 'error') {
+        mascotImg.src = 'assets/images/mascot_error.png';
+        mascotImg.classList.add('mascot-error');
+        bubble.classList.add('state-error');
+    } else if (state === 'thinking') {
+        mascotImg.src = 'assets/images/mascot_thinking.png';
+        mascotImg.classList.add('mascot-thinking');
+        bubble.classList.add('state-thinking');
+    } else {
+        mascotImg.src = 'assets/images/mascot_neutral.png';
+    }
+
+    if (message) {
+        bubble.textContent = message;
+        bubble.classList.remove('hidden');
+    }
+
+    // Reset after some time if not neutral
+    clearTimeout(mascotResetTimeout);
+    if (state !== 'neutral') {
+        const timeoutMs = state === 'thinking' ? 5000 : 3500;
+        mascotResetTimeout = setTimeout(() => {
+            setMascotState('neutral');
+            bubble.classList.add('hidden');
+            bubble.textContent = 'Need help? Tap to buy a plan';
+        }, timeoutMs);
+    }
+}
+
 function setupPlanActions() {
     document.addEventListener('click', (event) => {
         const buyButton = event.target.closest('[data-buy-plan]');
@@ -346,6 +394,18 @@ function setupPlanActions() {
         if (whatsappButton) {
             contactViaWhatsApp(whatsappButton.getAttribute('data-whatsapp-plan'));
         }
+    });
+
+    // Hover effects for mascot
+    document.querySelectorAll('.plan-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const planName = card.querySelector('.plan-name').textContent;
+            setMascotState('thinking', `Hmm... ${planName} looks like a solid choice!`);
+        });
+        card.addEventListener('mouseleave', () => {
+            setMascotState('neutral');
+            document.getElementById('mascot-bubble')?.classList.add('hidden');
+        });
     });
 }
 
@@ -434,16 +494,20 @@ function addButtonRipples() {
 function setupThemeToggle() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
-    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-
-    if (currentTheme) {
+    let currentTheme = 'dark';
+    try {
+        if (localStorage.getItem('theme')) {
+            currentTheme = localStorage.getItem('theme');
+        }
+    } catch (e) {
+        console.warn('localStorage not available (likely file:/// protocol)');
+    }
         document.documentElement.setAttribute('data-theme', currentTheme);
 
         if (currentTheme === 'dark' && themeIcon) {
             themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
         }
-    }
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', function () {
@@ -451,14 +515,14 @@ function setupThemeToggle() {
 
             if (theme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
+                try { localStorage.setItem('theme', 'light'); } catch(e) {}
                 if (themeIcon) {
                     themeIcon.classList.remove('fa-sun');
                     themeIcon.classList.add('fa-moon');
                 }
             } else {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
+                try { localStorage.setItem('theme', 'dark'); } catch(e) {}
                 if (themeIcon) {
                     themeIcon.classList.remove('fa-moon');
                     themeIcon.classList.add('fa-sun');
@@ -596,6 +660,9 @@ function setupFeedbackForm() {
             if (firstError) {
                 firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
+            if (typeof setMascotState === 'function') {
+                setMascotState('error', 'Oops! Please check the highlighted fields.');
+            }
             return;
         }
 
@@ -630,15 +697,15 @@ function setupFeedbackForm() {
 
         // Local Fallback / Test Success (always display success so user can claim Canva and test UI)
         if (!success) {
-            console.log('Supabase not connected. Saving feedback response locally in localStorage.');
+            console.log('Supabase not connected. Trying local fallback.');
             try {
                 const submissions = JSON.parse(localStorage.getItem('softsync_feedback') || '[]');
                 submissions.push({ ...feedbackData, created_at: new Date().toISOString() });
                 localStorage.setItem('softsync_feedback', JSON.stringify(submissions));
-                success = true;
             } catch (e) {
-                console.error(e);
+                console.warn('localStorage not available for fallback');
             }
+            success = true;
         }
 
         if (success) {
@@ -660,6 +727,9 @@ function setupFeedbackForm() {
                     formCard.classList.add('hidden');
                     successCard.classList.remove('hidden');
                     successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if (typeof setMascotState === 'function') {
+                        setMascotState('happy', 'Woohoo! Enjoy your Canva Pro!');
+                    }
                 }, 400);
             }
         } else {
