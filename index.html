@@ -19,11 +19,11 @@
 </head>
 
 <body>
-    <!-- Global Unified Navigation -->
     <nav class="global-nav">
         <div class="global-nav-container">
-            <a href="index.html" class="global-nav-link active"><i class="fa-solid fa-store"></i> Shop Home</a>
-            <a href="admin/index.html" class="global-nav-link"><i class="fa-solid fa-lock"></i> Admin Panel</a>
+            <a href="index.html" class="global-nav-link active"><i class="fa-solid fa-store"></i> <span data-translate="nav_shop">Shop Home</span></a>
+            <a href="status.html" class="global-nav-link"><i class="fa-solid fa-shield"></i> <span data-translate="nav_status">Check Status</span></a>
+            <a href="admin/index.html" class="global-nav-link"><i class="fa-solid fa-lock"></i> <span data-translate="nav_admin">Admin Panel</span></a>
         </div>
     </nav>
 
@@ -35,12 +35,14 @@
                 <span class="logo-text">SoftSync</span>
             </div>
             <div class="social-links">
+                <button id="lang-toggle" class="social-btn lang-btn" aria-label="Switch Language">
+                    <i class="fa-solid fa-language"></i> <span id="lang-toggle-text">தமிழ்</span>
+                </button>
                 <button id="theme-toggle" class="social-btn" aria-label="Toggle Dark Mode">
                     <i class="fa-solid fa-moon"></i>
                 </button>
                 <a href="#free-canva-section" class="social-btn gift-btn" id="gift-nav-btn">
-                    <i class="fa-solid fa-gift gift-icon" aria-hidden="true" style="color: #FF5A79;"></i> Get Free Canva
-                    🎁
+                    <i class="fa-solid fa-gift gift-icon" aria-hidden="true" style="color: #FF5A79;"></i> <span data-translate="get_free_canva">Get Free Canva</span> 🎁
                 </a>
                 <a href="#facebook" class="social-btn" id="facebook-btn"><i class="fa-brands fa-facebook-f social-icon"
                         aria-hidden="true"></i> Facebook</a>
@@ -55,24 +57,24 @@
     <!-- Hero Section -->
     <section class="hero animate-on-scroll">
         <div class="hero-container">
-            <h1>SoftSync - Your Creative Partner</h1>
-            <p>Professional Adobe Creative Cloud Plans at Unbeatable Prices</p>
+            <h1 data-translate="hero_title">SoftSync - Your Creative Partner</h1>
+            <p data-translate="hero_subtitle">Professional Adobe Creative Cloud Plans at Unbeatable Prices</p>
             <div class="trust-badges">
                 <div class="badge">
                     <span class="badge-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
-                    <span>Licensed & Official</span>
+                    <span data-translate="badge_licensed">Licensed & Official</span>
                 </div>
                 <div class="badge">
                     <span class="badge-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
-                    <span>Instant Activation</span>
+                    <span data-translate="badge_instant">Instant Activation</span>
                 </div>
                 <div class="badge">
                     <span class="badge-icon"><i class="fa-solid fa-handshake" aria-hidden="true"></i></span>
-                    <span>Expert Support</span>
+                    <span data-translate="badge_expert">Expert Support</span>
                 </div>
                 <div class="badge">
                     <span class="badge-icon"><i class="fa-solid fa-certificate" aria-hidden="true"></i></span>
-                    <span>Full 1 Year Access</span>
+                    <span data-translate="badge_access">Full 1 Year Access</span>
                 </div>
             </div>
         </div>
@@ -80,7 +82,41 @@
 
     <!-- Plans Section -->
     <section class="plans-section animate-on-scroll">
-        <h2 class="section-title">Choose Your Plan</h2>
+        <!-- Flash Sale Banner Container -->
+        <div class="flash-sale-banner-container">
+            <!-- Banner Mascot Promoter (Separate character peeking behind banner) -->
+            <div class="banner-mascot-wrapper" id="banner-mascot-promoter">
+                <div class="banner-mascot-bubble" id="banner-mascot-bubble">
+                    <span class="bubble-close" id="banner-mascot-close">&times;</span>
+                    <p>🔥 <strong>MEGA FIRE SALE!</strong> Grab Adobe Pro Plus for just <strong>₹2,699</strong>! ⏳ Ends in: <span id="banner-mascot-timer" style="color: #ff7e67; font-weight: bold;">02:45:30</span></p>
+                    <div class="banner-mascot-pointing">
+                        <i class="fa-solid fa-arrow-down"></i> <span data-translate="mascot_bubble_sub">Buy Now Below!</span>
+                    </div>
+                </div>
+                <div class="banner-mascot-character" id="banner-mascot-character">
+                    <img src="assets/images/mascot_happy.png" alt="Promo Mascot" />
+                    <div class="pointing-hand"><i class="fa-solid fa-hand-pointer fa-rotate-90"></i></div>
+                </div>
+            </div>
+
+            <!-- Flash Sale Banner -->
+            <div class="flash-sale-banner animate-on-scroll">
+                <div class="flash-sale-content">
+                    <span class="flash-icon">🔥</span>
+                    <div class="flash-text">
+                        <h3 data-translate="flash_title">Flash Sale: Pro Plus Discount!</h3>
+                        <p data-translate="flash_subtitle">Get Adobe Pro Plus for just ₹2,699. Ends in:</p>
+                    </div>
+                    <div class="flash-timer" id="flash-timer">
+                        <div class="time-block"><span id="timer-hours">02</span><small>HRS</small></div><span class="time-sep">:</span>
+                        <div class="time-block"><span id="timer-minutes">45</span><small>MIN</small></div><span class="time-sep">:</span>
+                        <div class="time-block"><span id="timer-seconds">30</span><small>SEC</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title" data-translate="section_choose_plan">Choose Your Plan</h2>
         <div class="plans-grid" id="plans-grid">
             <!-- Plan 1: Standard -->
             <div class="plan-card animate-on-scroll tilt">
@@ -222,41 +258,41 @@
 
     <!-- Benefits Section -->
     <section class="benefits-section animate-on-scroll">
-        <h2 class="section-title">Why Choose SoftSync?</h2>
+        <h2 class="section-title" data-translate="section_why_choose">Why Choose SoftSync?</h2>
         <div class="benefits-grid">
             <div class="benefit-card">
                 <div class="benefit-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></div>
-                <h3>Licensed & Official</h3>
-                <p>100% authentic Adobe licenses with official activation. No trials, no sharing, fully yours for 1
+                <h3 data-translate="badge_licensed">Licensed & Official</h3>
+                <p data-translate="benefit_desc_1">100% authentic Adobe licenses with official activation. No trials, no sharing, fully yours for 1
                     year.</p>
             </div>
             <div class="benefit-card">
                 <div class="benefit-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
-                <h3>Instant Activation</h3>
-                <p>Get your license activated within minutes. Start using Adobe Creative Cloud immediately after
+                <h3 data-translate="badge_instant">Instant Activation</h3>
+                <p data-translate="benefit_desc_2">Get your license activated within minutes. Start using Adobe Creative Cloud immediately after
                     purchase.</p>
             </div>
             <div class="benefit-card">
                 <div class="benefit-icon"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
-                <h3>24/7 Support</h3>
-                <p>Expert support via WhatsApp, Email & Instagram. We help you with setup, troubleshooting, and more.
+                <h3 data-translate="badge_expert">24/7 Support</h3>
+                <p data-translate="benefit_desc_3">Expert support via WhatsApp, Email & Instagram. We help you with setup, troubleshooting, and more.
                 </p>
             </div>
             <div class="benefit-card">
                 <div class="benefit-icon"><i class="fa-solid fa-credit-card" aria-hidden="true"></i></div>
-                <h3>Secure Payment</h3>
-                <p>Multiple payment options including UPI, card, and direct transfer. Your transaction is completely
+                <h3 data-translate="btn_facebook">Secure Payment</h3>
+                <p data-translate="benefit_desc_4">Multiple payment options including UPI, card, and direct transfer. Your transaction is completely
                     safe.</p>
             </div>
             <div class="benefit-card">
                 <div class="benefit-icon"><i class="fa-solid fa-star" aria-hidden="true"></i></div>
-                <h3>Full Feature Access</h3>
-                <p>Access all creative apps, updates, and new features released during your 1-year subscription.</p>
+                <h3 data-translate="badge_access">Full Feature Access</h3>
+                <p data-translate="benefit_desc_5">Access all creative apps, updates, and new features released during your 1-year subscription.</p>
             </div>
             <div class="benefit-card">
                 <div class="benefit-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
-                <h3>Community & Resources</h3>
-                <p>Join our community of creative professionals. Get exclusive tutorials and resources from experts.</p>
+                <h3 data-translate="nav_admin">Community & Resources</h3>
+                <p data-translate="benefit_desc_6">Join our community of creative professionals. Get exclusive tutorials and resources from experts.</p>
             </div>
         </div>
     </section>
@@ -264,9 +300,9 @@
     <!-- Feedback & Rewards Section -->
     <section id="free-canva-section" class="feedback-section animate-on-scroll">
         <div class="feedback-container">
-            <div class="feedback-badge"><i class="fa-solid fa-gift animate-pulse"></i> Limited Time Offer</div>
-            <h2 class="section-title">Claim Canva Pro for Free!</h2>
-            <p class="section-subtitle">We value your opinion. Share your feedback about SoftSync and get instant access
+            <div class="feedback-badge"><i class="fa-solid fa-gift animate-pulse"></i> <span data-translate="limited_offer_badge">Limited Time Offer</span></div>
+            <h2 class="section-title" data-translate="section_claim_canva">Claim Canva Pro for Free!</h2>
+            <p class="section-subtitle" data-translate="section_claim_subtitle">We value your opinion. Share your feedback about SoftSync and get instant access
                 to 1 Year of Canva Pro for free! 🎁</p>
 
             <div class="feedback-card-wrapper">
@@ -275,7 +311,7 @@
                     <form id="canva-feedback-form" novalidate>
                         <div class="form-grid">
                             <div class="form-group">
-                                <label for="feedback-email" class="form-label">Email Address <span
+                                <label for="feedback-email" class="form-label" data-translate="label_email">Email Address <span
                                         class="required">*</span></label>
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-envelope input-icon"></i>
@@ -286,7 +322,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="feedback-phone" class="form-label">Phone Number <span
+                                <label for="feedback-phone" class="form-label" data-translate="label_phone">Phone Number <span
                                         class="required">*</span></label>
                                 <div class="input-wrapper">
                                     <i class="fa-solid fa-phone input-icon"></i>
@@ -299,7 +335,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Rate Your Experience <span class="required">*</span></label>
+                            <label class="form-label" data-translate="label_rating">Rate Your Experience <span class="required">*</span></label>
                             <div class="star-rating" role="radiogroup" aria-label="Rating experience">
                                 <button type="button" class="star-btn" data-rating="1" aria-label="1 Star"><i
                                         class="fa-solid fa-star"></i></button>
@@ -324,7 +360,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-submit-feedback">
-                            <span>Submit & Claim Canva Pro</span> <i class="fa-solid fa-arrow-right"></i>
+                            <span data-translate="btn_submit_feedback">Submit & Claim Canva Pro</span> <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </form>
                 </div>
@@ -340,29 +376,29 @@
                         <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
                     </div>
 
-                    <h3>Thank You for Your Feedback!</h3>
-                    <p class="success-lead">Your feedback has been submitted successfully. As promised, here is your
+                    <h3 data-translate="title_thank_you">Thank You for Your Feedback!</h3>
+                    <p class="success-lead" data-translate="desc_thank_you">Your feedback has been submitted successfully. As promised, here is your
                         1-Year Canva Pro Access!</p>
 
                     <div class="reward-box">
                         <div class="reward-logo">
                             <img src="assets/images/pngwing.com.png" alt="Canva Pro logo">
-                            <span>Canva Pro 1-Year Access</span>
+                            <span data-translate="reward_title">Canva Pro 1-Year Access</span>
                         </div>
                         <div class="reward-instructions">
-                            <p><strong>To activate your license:</strong></p>
+                            <p><strong data-translate="reward_activate">To activate your license:</strong></p>
                             <ol>
-                                <li>Click the button below to join our official Canva Pro team.</li>
-                                <li>Log in with your existing Canva account or create a new one.</li>
-                                <li>Enjoy full Pro features for 1 year!</li>
+                                <li data-translate="reward_inst_1">Click the button below to join our official Canva Pro team.</li>
+                                <li data-translate="reward_inst_2">Log in with your existing Canva account or create a new one.</li>
+                                <li data-translate="reward_inst_3">Enjoy full Pro features for 1 year!</li>
                             </ol>
                         </div>
-                        <a href="#" id="claim-canva-btn" target="_blank" class="btn btn-primary claim-reward-btn">
+                        <a href="#" id="claim-canva-btn" target="_blank" class="btn btn-primary claim-reward-btn" data-translate="btn_activate_canva">
                             <i class="fa-solid fa-rocket"></i> Activate Canva Pro Now
                         </a>
                     </div>
 
-                    <p class="reward-help">Need help? <a href="#"
+                    <p class="reward-help" data-translate="reward_help">Need help? <a href="#"
                             onclick="openWhatsApp('Hi SoftSync, I submitted feedback but need help activating my free Canva Pro.')">Contact
                             support on WhatsApp</a></p>
                 </div>
@@ -370,8 +406,7 @@
 
             <!-- Feedbacks Wall (Wall of Love) -->
             <div class="feedbacks-wall animate-on-scroll" id="feedbacks-wall-section">
-                <h3 class="wall-title"><i class="fa-solid fa-comments" style="color: #8B5CF6;"></i> What Our Creators
-                    Say</h3>
+                <h3 class="wall-title"><i class="fa-solid fa-comments" style="color: #8B5CF6;"></i> <span data-translate="wall_title">What Our Creators Say</span></h3>
                 <div class="feedbacks-grid" id="feedbacks-display-grid">
                     <!-- Feedbacks will load dynamically here -->
                 </div>
@@ -382,8 +417,8 @@
     <!-- Contact Section -->
     <section class="contact-section animate-on-scroll">
         <div class="contact-container">
-            <h2 class="contact-title">Get in Touch & Buy Today</h2>
-            <p class="contact-subtitle">Choose your preferred communication method. We respond within minutes!</p>
+            <h2 class="contact-title" data-translate="contact_title">Get in Touch & Buy Today</h2>
+            <p class="contact-subtitle" data-translate="contact_subtitle">Choose your preferred communication method. We respond within minutes!</p>
 
             <div class="contact-methods">
                 <!-- WhatsApp -->
@@ -391,8 +426,8 @@
                     <div class="contact-method-icon"><i class="fa-brands fa-whatsapp contact-icon"
                             aria-hidden="true"></i></div>
                     <h3 class="contact-method-title">WhatsApp</h3>
-                    <p class="contact-method-desc">Quick replies and instant support for all your queries</p>
-                    <button class="btn btn-primary" onclick="openWhatsApp()">Message on WhatsApp</button>
+                    <p class="contact-method-desc" data-translate="whatsapp_desc">Quick replies and instant support for all your queries</p>
+                    <button class="btn btn-primary" onclick="openWhatsApp()" data-translate="btn_whatsapp">Message on WhatsApp</button>
                 </div>
 
                 <!-- Instagram -->
@@ -400,8 +435,8 @@
                     <div class="contact-method-icon"><i class="fa-brands fa-instagram contact-icon"
                             aria-hidden="true"></i></div>
                     <h3 class="contact-method-title">Instagram</h3>
-                    <p class="contact-method-desc">Follow for updates, deals, and creative inspiration</p>
-                    <button class="btn btn-secondary" onclick="openInstagram()">Follow on Instagram</button>
+                    <p class="contact-method-desc" data-translate="instagram_desc">Follow for updates, deals, and creative inspiration</p>
+                    <button class="btn btn-secondary" onclick="openInstagram()" data-translate="btn_instagram">Follow on Instagram</button>
                 </div>
 
                 <!-- Facebook -->
@@ -409,8 +444,8 @@
                     <div class="contact-method-icon"><i class="fa-brands fa-facebook-f contact-icon"
                             aria-hidden="true"></i></div>
                     <h3 class="contact-method-title">Facebook</h3>
-                    <p class="contact-method-desc">Like & follow our page for exclusive deals</p>
-                    <button class="btn btn-secondary" onclick="openFacebook()">Visit Facebook</button>
+                    <p class="contact-method-desc" data-translate="facebook_desc">Like & follow our page for exclusive deals</p>
+                    <button class="btn btn-secondary" onclick="openFacebook()" data-translate="btn_facebook">Visit Facebook</button>
                 </div>
 
                 <!-- Email -->
@@ -418,8 +453,8 @@
                     <div class="contact-method-icon"><i class="fa-solid fa-envelope contact-icon"
                             aria-hidden="true"></i></div>
                     <h3 class="contact-method-title">Email</h3>
-                    <p class="contact-method-desc">Send detailed queries to our support team</p>
-                    <button class="btn btn-secondary" onclick="openEmail()">Send Email</button>
+                    <p class="contact-method-desc" data-translate="email_desc">Send detailed queries to our support team</p>
+                    <button class="btn btn-secondary" onclick="openEmail()" data-translate="btn_email">Send Email</button>
                 </div>
             </div>
 
@@ -431,7 +466,7 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p style="margin-bottom: 20px;">© 2024 SoftSync. All rights reserved.</p>
+            <p style="margin-bottom: 20px;" data-translate="footer_rights">© 2024 SoftSync. All rights reserved.</p>
             <div class="footer-links">
                 <a href="#" class="footer-link">Privacy Policy</a>
                 <a href="#" class="footer-link">Terms of Service</a>
@@ -439,7 +474,7 @@
                 <a href="#" class="footer-link">FAQ</a>
                 <a href="admin/index.html" class="footer-link">Admin Panel</a>
             </div>
-            <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">SoftSync is an authorized reseller of Adobe
+            <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;" data-translate="footer_disclaimer">SoftSync is an authorized reseller of Adobe
                 Creative Cloud licenses.</p>
         </div>
     </footer>
@@ -457,6 +492,18 @@
             <button class="mascot-option" data-plan="Envato Elements">Buy Envato</button>
         </div>
     </div>
-</body>
 
+    <!-- Instagram Follow Modal -->
+    <div class="modal-overlay" id="insta-modal" style="display: none; align-items: center; justify-content: center; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; backdrop-filter: blur(10px);">
+        <div class="modal-card" style="background: var(--surface); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); max-width: 400px; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+            <button class="modal-close" onclick="closeInstaModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text2); font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-icon" style="font-size: 4rem; margin-bottom: 20px; background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"><i class="fa-brands fa-instagram"></i></div>
+            <h3 class="modal-title" style="margin-bottom: 15px; font-size: 1.6rem;">Unlock Discount</h3>
+            <p class="modal-desc" style="color: var(--text2); line-height: 1.6; margin-bottom: 25px;">To claim the special <strong>₹2,699</strong> price for the Adobe Pro Plus plan, you must follow our official Instagram page first!</p>
+            <button class="btn btn-primary pulse-btn" style="width: 100%; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border: none;" onclick="claimInstaDiscount()">
+                <i class="fa-brands fa-instagram" style="margin-right: 8px;"></i> Follow & Claim Discount
+            </button>
+        </div>
+    </div>
+</body>
 </html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftSync - Check Activation Status</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .status-container {
+            flex-grow: 1;
+            margin-top: 60px; /* Offset for fixed nav */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .status-header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            z-index: 10;
+        }
+        .status-iframe-wrapper {
+            width: 100%;
+            z-index: 10;
+            padding: 0 20px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .status-iframe-wrapper iframe {
+            width: 100%;
+            min-height: 800px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+        }
+        .status-support-box {
+            margin: 0 auto 60px;
+            max-width: 800px;
+            background: var(--glass-bg);
+            border: 1px solid var(--color-primary);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+            backdrop-filter: blur(16px);
+            z-index: 10;
+        }
+        .status-support-title {
+            color: var(--color-text);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .status-support-title span {
+            color: #FF5A79;
+            font-weight: 700;
+        }
+        .status-support-desc {
+            color: var(--color-text-light);
+            margin-bottom: 24px;
+        }
+        .support-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-call {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-call:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .pulse-btn {
+            animation: pulse-shadow 2s infinite;
+        }
+        @keyframes pulse-shadow {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Global Unified Navigation -->
+    <nav class="global-nav">
+        <div class="global-nav-container">
+            <a href="index.html" class="global-nav-link"><i class="fa-solid fa-store"></i> Shop Home</a>
+            <a href="status.html" class="global-nav-link active"><i class="fa-solid fa-shield"></i> Check Status</a>
+            <a href="admin/index.html" class="global-nav-link"><i class="fa-solid fa-lock"></i> Admin Panel</a>
+        </div>
+    </nav>
+
+    <!-- Header with Social Links -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="assets/images/softsync.png" alt="SoftSync" class="logo-image">
+                <span class="logo-text">SoftSync</span>
+            </div>
+            <div class="social-links">
+                <a href="index.html#free-canva-section" class="social-btn gift-btn" id="gift-nav-btn">
+                    <i class="fa-solid fa-gift gift-icon" aria-hidden="true" style="color: #FF5A79;"></i> Get Free Canva 🎁
+                </a>
+                <a href="#whatsapp" class="social-btn" id="whatsapp-btn"><i class="fa-brands fa-whatsapp social-icon" aria-hidden="true"></i> WhatsApp</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="status-container">
+        <div class="status-header animate-on-scroll">
+            <h1 class="hero-title" style="font-size: 3rem; margin-bottom: 10px;">Check Status</h1>
+            <p class="hero-subtitle" style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Enter your email below to check the real-time activation status of your SoftSync software.</p>
+        </div>
+
+        <div class="status-iframe-wrapper animate-on-scroll">
+            <iframe src="https://reseller.ado-besoft.com/status" title="Check Subscription Status"></iframe>
+        </div>
+
+        <!-- Support Box -->
+        <div class="status-support-box animate-on-scroll tilt">
+            <h2 class="status-support-title">Status showing as <span>Inactive</span>?</h2>
+            <p class="status-support-desc">Don't worry! Sometimes activations take a few minutes, or there might be a minor issue. Contact us immediately and we will fix it instantly.</p>
+            <div class="support-actions">
+                <a href="tel:+919363348886" class="btn btn-call">
+                    <i class="fa-solid fa-phone"></i> Call Us Now
+                </a>
+                <a href="https://wa.me/919363348886?text=Hi%20SoftSync,%20my%20order%20status%20is%20showing%20as%20Inactive.%20Can%20you%20help%3F" target="_blank" class="btn btn-primary pulse-btn">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal Script for animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

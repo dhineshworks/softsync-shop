@@ -1,7 +1,166 @@
-// SoftSync Contact Configuration
+let currentLang = 'en';
+try {
+    currentLang = localStorage.getItem('lang') || 'en';
+} catch (e) {
+    console.warn('localStorage not available for language preference');
+}
+
+const LOCALIZATION = {
+    en: {
+        nav_shop: 'Shop Home',
+        nav_status: 'Check Status',
+        nav_admin: 'Admin Panel',
+        get_free_canva: 'Get Free Canva',
+        hero_title: 'SoftSync - Your Creative Partner',
+        hero_subtitle: 'Professional Adobe Creative Cloud Plans at Unbeatable Prices',
+        badge_licensed: 'Licensed & Official',
+        badge_instant: 'Instant Activation',
+        badge_expert: 'Expert Support',
+        badge_access: 'Full 1 Year Access',
+        section_choose_plan: 'Choose Your Plan',
+        section_why_choose: 'Why Choose SoftSync?',
+        section_claim_canva: 'Claim Canva Pro for Free!',
+        section_claim_subtitle: 'We value your opinion. Share your feedback about SoftSync and get instant access to 1 Year of Canva Pro for free! 🎁',
+        label_email: 'Email Address *',
+        label_phone: 'Phone Number *',
+        label_rating: 'Rate Your Experience *',
+        label_comments: 'Your Feedback (Optional)',
+        placeholder_comments: 'Tell us what you like about SoftSync or how we can improve...',
+        btn_submit_feedback: 'Submit & Claim Canva Pro',
+        title_thank_you: 'Thank You for Your Feedback!',
+        desc_thank_you: 'Your feedback has been submitted successfully. As promised, here is your 1-Year Canva Pro Access!',
+        reward_title: 'Canva Pro 1-Year Access',
+        reward_activate: 'To activate your license:',
+        reward_inst_1: 'Click the button below to join our official Canva Pro team.',
+        reward_inst_2: 'Log in with your existing Canva account or create a new one.',
+        reward_inst_3: 'Enjoy full Pro features for 1 year!',
+        btn_activate_canva: 'Activate Canva Pro Now',
+        reward_help: 'Need help? Contact support on WhatsApp',
+        wall_title: 'What Our Creators Say',
+        contact_title: 'Get in Touch & Buy Today',
+        contact_subtitle: 'Choose your preferred communication method. We respond within minutes!',
+        whatsapp_desc: 'Quick replies and instant support for all your queries',
+        btn_whatsapp: 'Message on WhatsApp',
+        instagram_desc: 'Follow for updates, deals, and creative inspiration',
+        btn_instagram: 'Follow on Instagram',
+        facebook_desc: 'Like & follow our page for exclusive deals',
+        btn_facebook: 'Visit Facebook',
+        email_desc: 'Send detailed queries to our support team',
+        btn_email: 'Send Email',
+        footer_rights: '© 2024 SoftSync. All rights reserved.',
+        footer_disclaimer: 'SoftSync is an authorized reseller of Adobe Creative Cloud licenses.',
+        benefit_desc_1: '100% authentic Adobe licenses with official activation. No trials, no sharing, fully yours for 1 year.',
+        benefit_desc_2: 'Get your license activated within minutes. Start using Adobe Creative Cloud immediately after purchase.',
+        benefit_desc_3: 'Expert support via WhatsApp, Email & Instagram. We help you with setup, troubleshooting, and more.',
+        benefit_desc_4: 'Multiple payment options including UPI, card, and direct transfer. Your transaction is completely safe.',
+        benefit_desc_5: 'Access all creative apps, updates, and new features released during your 1-year subscription.',
+        benefit_desc_6: 'Join our community of creative professionals. Get exclusive tutorials and resources from experts.',
+        flash_title: 'Flash Sale: Pro Plus Discount!',
+        flash_subtitle: 'Get Adobe Pro Plus for just ₹2,699. Ends in:',
+        mascot_bubble_text: '🔥 MEGA FIRE SALE! Grab Adobe Pro Plus for just ₹2,699! ⏳ Ends in: ',
+        mascot_bubble_sub: 'Buy Now Below!',
+        limited_offer_badge: 'Limited Time Offer'
+    },
+    ta: {
+        nav_shop: 'Shop முகப்பு',
+        nav_status: 'Status சரிபார்க்க',
+        nav_admin: 'Admin Panel',
+        get_free_canva: 'இலவச Canva பெறுங்கள்',
+        hero_title: 'SoftSync - உங்கள் Creative Partner',
+        hero_subtitle: 'சிறந்த விலையில் Professional Adobe Creative Cloud திட்டங்கள்',
+        badge_licensed: 'Licensed & Official',
+        badge_instant: 'Instant Activation',
+        badge_expert: 'Expert Support',
+        badge_access: 'Full 1 Year Access',
+        section_choose_plan: 'உங்கள் Plan-ஐ தேர்ந்தெடுக்கவும்',
+        section_why_choose: 'ஏன் SoftSync-ஐ தேர்வு செய்ய வேண்டும்?',
+        section_claim_canva: 'Canva Pro-வை இலவசமாகப் பெறுங்கள்!',
+        section_claim_subtitle: 'உங்கள் Feedback-ஐ பகிர்ந்து கொண்டு, 1 வருட Canva Pro-வை இலவசமாகப் பெறுங்கள்! 🎁',
+        label_email: 'Email முகவரி *',
+        label_phone: 'Phone Number *',
+        label_rating: 'உங்கள் Rating-ஐ பதிவு செய்யவும் *',
+        label_comments: 'உங்கள் Feedback (Optional)',
+        placeholder_comments: 'SoftSync பற்றி உங்கள் கருத்துகளை இங்கே பதிவிடவும்...',
+        btn_submit_feedback: 'Submit செய்து Canva Pro பெறுங்கள்',
+        title_thank_you: 'உங்கள் Feedback-க்கு நன்றி!',
+        desc_thank_you: 'உங்கள் Feedback வெற்றிகரமாக Submit செய்யப்பட்டது. இதோ உங்களுக்கான 1-Year Canva Pro Access!',
+        reward_title: 'Canva Pro 1-Year Access',
+        reward_activate: 'உங்கள் License-ஐ Activate செய்ய:',
+        reward_inst_1: 'கீழே உள்ள பட்டனை கிளிக் செய்து எங்கள் Canva Pro Team-ல் இணையவும்.',
+        reward_inst_2: 'உங்கள் Canva Account-ல் Login செய்யவும் அல்லது புதிய Account உருவாக்கவும்.',
+        reward_inst_3: '1 வருடத்திற்கு முழு Pro Features-ஐ அனுபவிக்கவும்!',
+        btn_activate_canva: 'Canva Pro-வை இப்போது Activate செய்',
+        reward_help: 'உதவி தேவையா? WhatsApp-ல் தொடர்பு கொள்ளவும்',
+        wall_title: 'எங்கள் Creators-இன் கருத்துக்கள்',
+        contact_title: 'Contact செய்து இன்றே வாங்குங்கள்',
+        contact_subtitle: 'உங்களுக்கு விருப்பமான வழியில் தொடர்பு கொள்ளவும். சில நிமிடங்களில் Reply செய்வோம்!',
+        whatsapp_desc: 'உங்கள் கேள்விகளுக்கு உடனடி Support',
+        btn_whatsapp: 'WhatsApp-ல் Message செய்',
+        instagram_desc: 'Updates மற்றும் Deals-க்கு Follow செய்யவும்',
+        btn_instagram: 'Instagram-ல் Follow செய்',
+        facebook_desc: 'Exclusive Deals-க்கு எங்கள் பக்கத்தை Follow செய்யவும்',
+        btn_facebook: 'Facebook-ஐ பார்வையிடவும்',
+        email_desc: 'எங்கள் Support Team-க்கு Email அனுப்பவும்',
+        btn_email: 'Email அனுப்பு',
+        footer_rights: '© 2024 SoftSync. All rights reserved.',
+        footer_disclaimer: 'SoftSync என்பது Adobe Creative Cloud Licenses-இன் Authorized Reseller ஆகும்.',
+        benefit_desc_1: 'Official Activation உடன் 100% Authentic Adobe Licenses. Trial இல்லை, Sharing இல்லை, 1 வருடத்திற்கு முழுமையாக உங்களுடையது.',
+        benefit_desc_2: 'சில நிமிடங்களில் License Activate செய்யப்படும். வாங்கிய உடனேயே Adobe Creative Cloud பயன்படுத்தலாம்.',
+        benefit_desc_3: 'WhatsApp, Email & Instagram மூலம் Expert Support. Installation மற்றும் Troubleshooting-ல் நாங்கள் உதவுகிறோம்.',
+        benefit_desc_4: 'UPI, Card, மற்றும் Bank Transfer உட்பட பல Payment Options. 100% Secure Transaction.',
+        benefit_desc_5: '1 வருட Subscription-ல் வரும் அனைத்து Creative Apps, Updates மற்றும் புதிய Features-ஐ Access செய்யலாம்.',
+        benefit_desc_6: 'எங்கள் Creative Professionals சமூகத்தில் இணையுங்கள். Exclusive Tutorials & Resources கிடைக்கும்.',
+        flash_title: 'Flash Sale: Pro Plus Discount!',
+        flash_subtitle: 'Adobe Pro Plus வெறும் ₹2,699-க்கு பெறுங்கள். Ends in:',
+        mascot_bubble_text: '🔥 MEGA FIRE SALE! Adobe Pro Plus வெறும் ₹2,699! ⏳ Ends in: ',
+        mascot_bubble_sub: 'Buy Now Below!',
+        limited_offer_badge: 'Limited Time Offer'
+    }
+};
+
+const PLAN_TRANSLATIONS = {
+    ta: {
+        'Standard Plan': 'Standard Plan',
+        'Most Popular': 'Most Popular',
+        'Best Value': 'Best Value',
+        'Perfect for individual creators': 'Individual Creators-க்கு ஏற்றது',
+        'For professional teams': 'Professional Teams-க்கு',
+        'Design like a pro': 'Pro போல Design செய்யலாம்',
+        '1 Year Full Access': '1 Year Full Access',
+        '<del style="opacity: 0.6; margin-right: 4px;">₹3,350</del> 1 Year Full Access': '<del style="opacity: 0.6; margin-right: 4px;">₹3,350</del> 1 Year Full Access',
+        'Photoshop & Lightroom 20+ Apps': 'Photoshop & Lightroom 20+ Apps',
+        '10000 AI Credits Per Month': 'மாதத்திற்கு 10000 AI Credits',
+        'Premiere Pro & After Effects': 'Premiere Pro & After Effects',
+        '100GB Cloud Storage': '100GB Cloud Storage',
+        'Stock Library Access': 'Stock Library Access',
+        'Email Support': 'Email Support',
+        'All Standard Features': 'அனைத்து Standard Features',
+        'FireFly Video Generations': 'FireFly Video Generations',
+        '4000 AI Credits Per Month': 'மாதத்திற்கு 4000 AI Credits',
+        '1TB Cloud Storage': '1TB Cloud Storage',
+        'Advanced AI Features(Nano Banana)': 'Advanced AI Features',
+        'Priority Support 24/7': 'Priority Support 24/7',
+        '100+ Million Premium Assets': '100+ Million Premium Assets',
+        'Remove Backgrounds Instantly': 'Remove Backgrounds Instantly',
+        'Magic Resize & Animation': 'Magic Resize & Animation',
+        'All Fonts': 'All Fonts',
+        'Premium Templates': 'Premium Templates',
+        'Official license': 'Official License',
+        'Buy Now': 'Buy Now',
+        'WhatsApp': 'WhatsApp'
+    }
+};
+
+function getTranslatedPlanText(text, lang) {
+    if (lang === 'ta' && PLAN_TRANSLATIONS.ta[text]) {
+        return PLAN_TRANSLATIONS.ta[text];
+    }
+    return text;
+}
+
 const CONTACT_CONFIG = {
     WHATSAPP_NUMBER: '919363348886',
-    INSTAGRAM_URL: 'https://www.instagram.com/softsync.officalr4/',
+    INSTAGRAM_URL: 'https://www.instagram.com/softsync.official?igsh=MXZtODY0YnNwa2dlNw==',
     FACEBOOK_URL: 'https://www.facebook.com/profile.php?id=61583180897775',
     EMAIL: 'softsynctool@gmail.com'
 };
@@ -40,8 +199,8 @@ const FALLBACK_PLANS = [
         slug: 'pro-plus',
         badge: 'Most Popular',
         description: 'For professional teams',
-        price: 3350,
-        price_subtitle: '1 Year Full Access',
+        price: 2699,
+        price_subtitle: '<del style="opacity: 0.6; margin-right: 4px;">₹3,350</del> 1 Year Full Access',
         image_url: 'assets/images/adobe pro plus.png',
         image_alt: 'Adobe Pro Plus plan',
         features: [
@@ -119,30 +278,36 @@ function createPlanCard(plan) {
     const primaryButtonClass = plan.featured ? 'btn btn-secondary' : 'btn btn-primary';
     const whatsappButtonClass = plan.featured ? 'btn btn-primary' : 'btn btn-secondary';
 
+    const badgeText = getTranslatedPlanText(plan.badge, currentLang);
+    const descText = getTranslatedPlanText(plan.description, currentLang);
+    const subtitleText = getTranslatedPlanText(plan.price_subtitle, currentLang);
+    const buyBtnText = getTranslatedPlanText('Buy Now', currentLang);
+    const waBtnText = getTranslatedPlanText('WhatsApp', currentLang);
+
     card.innerHTML = `
-        <div class="plan-badge"${gradientStyle}>${plan.badge}</div>
+        <div class="plan-badge"${gradientStyle}>${badgeText}</div>
         <div class="plan-image">
             <img src="${plan.image_url}" alt="${plan.image_alt || plan.name}">
         </div>
         <div class="plan-header">
             <div class="plan-name"${accentStyle}>${plan.name}</div>
-            <p class="plan-description">${plan.description}</p>
+            <p class="plan-description">${descText}</p>
             <div class="plan-price"${accentStyle}>${formatPrice(plan.price)}</div>
-            <p class="plan-price-subtitle">${plan.price_subtitle}</p>
+            <p class="plan-price-subtitle">${subtitleText}</p>
         </div>
         <div class="plan-content">
             <div class="plan-features">
                 ${plan.features.map((feature) => `
                     <div class="feature">
                         <span class="feature-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-                        <span>${feature}</span>
+                        <span>${getTranslatedPlanText(feature, currentLang)}</span>
                     </div>
                 `).join('')}
             </div>
         </div>
         <div class="plan-footer">
-            <button class="${primaryButtonClass}" data-buy-plan="${plan.name}"${gradientStyle}>Buy Now</button>
-            <button class="${whatsappButtonClass}" data-whatsapp-plan="${plan.name}">WhatsApp</button>
+            <button class="${primaryButtonClass}" data-buy-plan="${plan.name}"${gradientStyle}>${buyBtnText}</button>
+            <button class="${whatsappButtonClass}" data-whatsapp-plan="${plan.name}">${waBtnText}</button>
         </div>
     `;
 
@@ -243,8 +408,45 @@ function openEmail() {
     window.open(`mailto:${CONTACT_CONFIG.EMAIL}?subject=${subject}&body=${body}`, '_blank');
 }
 
+// Global variable to hold pending plan
+let pendingDiscountPlan = null;
+
+function closeInstaModal() {
+    const modal = document.getElementById('insta-modal');
+    if (modal) modal.classList.remove('show');
+    pendingDiscountPlan = null;
+}
+
+function claimInstaDiscount() {
+    openInstagram();
+    const modal = document.getElementById('insta-modal');
+    if (modal) modal.classList.remove('show');
+    
+    if (pendingDiscountPlan) {
+        setTimeout(async () => {
+            const plan = findPlan(pendingDiscountPlan);
+            const priceText = plan ? formatPrice(plan.price) : '';
+            const message = `Hi SoftSync! I followed your Instagram and want to claim the special discount price of ${priceText} for the ${pendingDiscountPlan} plan. How can I proceed with the payment?`;
+            
+            if (typeof setMascotState === 'function') {
+                setMascotState('happy', `Discount applied! Setting up your ${pendingDiscountPlan} order...`);
+            }
+            await saveOrderIntent(plan, 'buy_now_discount');
+            openWhatsApp(message);
+            pendingDiscountPlan = null;
+        }, 1500);
+    }
+}
+
 // Buy Now function
 async function buyNow(planType) {
+    if (planType.includes('Pro Plus')) {
+        pendingDiscountPlan = planType;
+        const modal = document.getElementById('insta-modal');
+        if (modal) modal.classList.add('show');
+        return; // Wait for modal action
+    }
+
     const plan = findPlan(planType);
     const priceText = plan ? formatPrice(plan.price) : '';
     const message = `Hi SoftSync! I want to buy the ${planType} plan (${priceText}). How can I proceed with the payment?`;
@@ -255,6 +457,47 @@ async function buyNow(planType) {
 
     await saveOrderIntent(plan, 'buy_now');
     setTimeout(() => { openWhatsApp(message); }, 800);
+}
+
+// Flash Timer Logic
+function startFlashTimer() {
+    let endTime = localStorage.getItem('softsync_flash_end');
+    if (!endTime || Date.now() > parseInt(endTime)) {
+        endTime = Date.now() + (2 * 60 * 60 * 1000) + (45 * 60 * 1000) + (30 * 1000); // 2h 45m 30s
+        localStorage.setItem('softsync_flash_end', endTime);
+    }
+
+    const hEl = document.getElementById('timer-hours');
+    const mEl = document.getElementById('timer-minutes');
+    const sEl = document.getElementById('timer-seconds');
+    if (!hEl || !mEl || !sEl) return;
+
+    setInterval(() => {
+        let diff = parseInt(localStorage.getItem('softsync_flash_end')) - Date.now();
+        if (diff <= 0) {
+            const newEndTime = Date.now() + (2 * 60 * 60 * 1000) + (45 * 60 * 1000) + (30 * 1000);
+            localStorage.setItem('softsync_flash_end', newEndTime);
+            diff = newEndTime - Date.now();
+        }
+
+        const h = Math.floor(diff / (1000 * 60 * 60));
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        const hStr = h.toString().padStart(2, '0');
+        const mStr = m.toString().padStart(2, '0');
+        const sStr = s.toString().padStart(2, '0');
+
+        hEl.textContent = hStr;
+        mEl.textContent = mStr;
+        sEl.textContent = sStr;
+
+        // Also update the peeking mascot speech bubble timer if it exists
+        const mascotTimerEl = document.getElementById('banner-mascot-timer');
+        if (mascotTimerEl) {
+            mascotTimerEl.textContent = `${hStr}:${mStr}:${sStr}`;
+        }
+    }, 1000);
 }
 
 function setupContactButtons() {
@@ -741,15 +984,175 @@ function setupFeedbackForm() {
     });
 }
 
+function translatePage(lang) {
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (LOCALIZATION[lang] && LOCALIZATION[lang][key]) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = LOCALIZATION[lang][key];
+            } else {
+                el.innerHTML = LOCALIZATION[lang][key];
+            }
+        }
+    });
+
+    // Handle comments textarea placeholder explicitly
+    const commentsEl = document.getElementById('feedback-comments');
+    if (commentsEl) {
+        commentsEl.placeholder = lang === 'ta'
+            ? LOCALIZATION.ta.placeholder_comments
+            : LOCALIZATION.en.placeholder_comments;
+    }
+
+    // Translate the peeking mascot bubble text if active
+    const bubblePara = document.querySelector('#banner-mascot-bubble p');
+    if (bubblePara) {
+        const timeVal = document.getElementById('banner-mascot-timer')?.outerHTML || '02:45:30';
+        if (lang === 'ta') {
+            bubblePara.innerHTML = `🔥 <strong>மெகா தீ விற்பனை!</strong> அடோப் புரோ பிளஸ் வெறும் <strong>₹2,699</strong>! ⏳ முடிவடைய இன்னும்: ${timeVal}`;
+        } else {
+            bubblePara.innerHTML = `🔥 <strong>MEGA FIRE SALE!</strong> Grab Adobe Pro Plus for just <strong>₹2,699</strong>! ⏳ Ends in: ${timeVal}`;
+        }
+    }
+
+    // Translate modal title/desc if showing
+    const modalTitle = document.querySelector('.modal-card h3');
+    const modalDesc = document.querySelector('.modal-card p');
+    const modalBtn = document.querySelector('.modal-card button.btn-primary');
+    if (modalTitle && modalDesc && modalBtn) {
+        if (lang === 'ta') {
+            modalTitle.textContent = 'தள்ளுபடியை அன்லாக் செய்க';
+            modalDesc.innerHTML = 'அடோப் புரோ பிளஸ் திட்டத்திற்கான சிறப்பு தள்ளுபடி விலையான <strong>₹2,699</strong>-ஐப் பெற, முதலில் எங்களது அதிகாரப்பூர்வ இன்ஸ்டாகிராம் பக்கத்தை நீங்கள் பின்தொடர வேண்டும்!';
+            modalBtn.innerHTML = '<i class="fa-brands fa-instagram" style="margin-right: 8px;"></i> பின்தொடர்ந்து தள்ளுபடி பெறுக';
+        } else {
+            modalTitle.textContent = 'Unlock Discount';
+            modalDesc.innerHTML = 'To claim the special <strong>₹2,699</strong> price for the Adobe Pro Plus plan, you must follow our official Instagram page first!';
+            modalBtn.innerHTML = '<i class="fa-brands fa-instagram" style="margin-right: 8px;"></i> Follow & Claim Discount';
+        }
+    }
+
+    // Toggle button text
+    const langBtnText = document.getElementById('lang-toggle-text');
+    if (langBtnText) {
+        langBtnText.textContent = lang === 'en' ? 'தமிழ்' : 'English';
+    }
+
+    // Refresh dynamically loaded plan cards
+    renderPlans(activePlans);
+}
+
+function setupLanguageToggle() {
+    const langBtn = document.getElementById('lang-toggle');
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ta' : 'en';
+            try {
+                localStorage.setItem('lang', currentLang);
+            } catch (e) {}
+            translatePage(currentLang);
+        });
+    }
+
+    // Translate initially
+    translatePage(currentLang);
+}
+
+function setupBannerMascot() {
+    const wrapper = document.getElementById('banner-mascot-promoter');
+    const character = document.getElementById('banner-mascot-character');
+    const bubble = document.getElementById('banner-mascot-bubble');
+    const closeBtn = document.getElementById('banner-mascot-close');
+
+    if (!wrapper || !character) return;
+
+    // Check if dismissed previously in this session
+    try {
+        if (sessionStorage.getItem('hide_banner_mascot_bubble') === 'true') {
+            if (bubble) bubble.style.display = 'none';
+        }
+    } catch (e) {
+        console.warn('sessionStorage not available');
+    }
+
+    // Close button click
+    if (closeBtn && bubble) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            bubble.style.opacity = '0';
+            bubble.style.transform = 'translateY(10px) scale(0.95)';
+            setTimeout(() => {
+                bubble.style.display = 'none';
+            }, 300);
+            try {
+                sessionStorage.setItem('hide_banner_mascot_bubble', 'true');
+            } catch (err) {}
+        });
+    }
+
+    // Clicking character or bubble content scrolls to offer and highlights it
+    const triggerOfferAction = (e) => {
+        if (e.target.closest('#banner-mascot-close')) return;
+
+        const planCards = document.querySelectorAll('.plan-card');
+        let proPlusCard = null;
+        for (let card of planCards) {
+            const planNameEl = card.querySelector('.plan-name');
+            if (planNameEl && planNameEl.textContent.includes('Pro Plus')) {
+                proPlusCard = card;
+                break;
+            }
+            if (card.innerText.includes('Pro Plus')) {
+                proPlusCard = card;
+            }
+        }
+
+        if (proPlusCard) {
+            proPlusCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Apply gold pulsing highlight glow
+            proPlusCard.classList.add('plan-highlight');
+            setTimeout(() => {
+                proPlusCard.classList.remove('plan-highlight');
+            }, 1800);
+
+            // Pop up the instagram buy flow
+            setTimeout(() => {
+                buyNow('Pro Plus');
+            }, 900);
+        }
+    };
+
+    character.addEventListener('click', triggerOfferAction);
+    if (bubble) {
+        bubble.addEventListener('click', triggerOfferAction);
+    }
+
+    // Show bubble on hover if hidden
+    character.addEventListener('mouseenter', () => {
+        if (bubble && bubble.style.display === 'none') {
+            bubble.style.display = 'block';
+            bubble.style.opacity = '0';
+            bubble.style.transform = 'translateY(10px) scale(0.95)';
+            // force reflow
+            bubble.offsetHeight;
+            bubble.style.opacity = '1';
+            bubble.style.transform = 'translateY(0) scale(1)';
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     setupContactButtons();
     setupPlanActions();
     setupMascot();
+    setupBannerMascot();
+    setupLanguageToggle();
     setupThemeToggle();
     setupGeneratedStyles();
     addScrollAnimations();
     addButtonRipples();
     loadPlans();
+    startFlashTimer();
 
     // Initialize rating and feedback
     setupStarRating();
