@@ -96,26 +96,69 @@
             }
         }
 
+        /* Ambient Glows */
+        .ambient-glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+            animation: floatGlow 14s ease-in-out infinite alternate;
+        }
+        .glow-1 {
+            background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+            top: 15%;
+            left: 10%;
+        }
+        .glow-2 {
+            background: radial-gradient(circle, var(--color-secondary) 0%, transparent 70%);
+            bottom: 25%;
+            right: 10%;
+            animation-delay: -7s;
+        }
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 40px) scale(1.15); }
+        }
+
         /* Native Status Checker Styles */
         .status-checker-card {
             width: 90%;
             max-width: 650px;
-            margin: 0 auto 60px;
-            padding: 40px;
+            margin: 0 auto 50px;
+            padding: 35px;
             background: var(--glass-bg);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), var(--shadow-glow);
-            backdrop-filter: blur(24px) saturate(120%);
-            -webkit-backdrop-filter: blur(24px) saturate(120%);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), var(--shadow-glow);
+            backdrop-filter: blur(32px) saturate(140%);
+            -webkit-backdrop-filter: blur(32px) saturate(140%);
             z-index: 10;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .status-checker-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius);
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
         
         .status-checker-card:hover {
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 50px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55), 0 0 50px rgba(124, 58, 237, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             border-color: rgba(124, 58, 237, 0.25);
-            transform: translateY(-4px);
+            transform: translateY(-2px);
         }
         
         .form-group {
@@ -203,94 +246,211 @@
             opacity: 0.6;
         }
         
-        /* Result Badges */
-        .result-status-badge-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 28px;
+        /* Consolidated Org Card styling */
+        .org-status-card {
+            background: rgba(11, 11, 19, 0.45);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 26px;
+            margin-bottom: 24px;
+            text-align: left;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
-        
-        .status-badge {
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 0.9rem;
+
+        .org-card-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 16px;
+        }
+
+        .org-icon-container {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 25px;
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.25);
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .org-text-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-grow: 1;
+        }
+
+        .org-label {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
             font-weight: 700;
+        }
+
+        .org-name-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .org-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--color-text);
+            margin: 0;
+            letter-spacing: -0.01em;
+            line-height: 1.25;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            line-height: 1;
         }
-        
+
         .status-active {
             background: rgba(16, 185, 129, 0.15);
             color: #10B981;
             border: 1px solid rgba(16, 185, 129, 0.3);
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
         }
-        
+
         .status-warning {
             background: rgba(245, 158, 11, 0.15);
             color: #F59E0B;
             border: 1px solid rgba(245, 158, 11, 0.3);
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
         }
-        
+
         .status-expired {
             background: rgba(239, 68, 68, 0.15);
             color: #EF4444;
             border: 1px solid rgba(239, 68, 68, 0.3);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.1);
         }
-        
-        /* Details Grid */
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 28px;
-        }
-        
-        .result-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
-        
-        .result-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(124, 58, 237, 0.2);
-        }
-        
-        .result-item.full-width {
-            grid-column: span 2;
-        }
-        
-        .result-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
+
+        .team-changed-text {
+            font-size: 0.85rem;
             color: var(--color-text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-            font-weight: 600;
+            margin-top: 2px;
+            font-weight: 500;
         }
-        
-        .result-label i {
-            color: var(--color-primary-light);
+
+        .org-status-desc {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.5;
         }
-        
-        .result-value {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.35rem;
+
+        /* Inline Switch Button Section */
+        .inline-switch {
+            margin: 16px 0 16px 0;
+            padding: 18px;
+            background: rgba(124, 58, 237, 0.04);
+            border: 1px solid rgba(124, 58, 237, 0.12);
+            border-radius: 14px;
+            text-align: left;
+        }
+
+        .switch-notice-title {
+            font-size: 0.95rem;
             font-weight: 700;
             color: var(--color-text);
-            word-break: break-word;
+            margin-bottom: 4px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .switch-notice-desc {
+            font-size: 0.82rem;
+            color: var(--color-text-light);
+            margin-bottom: 14px;
+        }
+
+        .switch-btn-blue {
+            width: 100%;
+            padding: 15px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
+        }
+
+        .switch-btn-blue:hover:not(:disabled) {
+            background: #1d4ed8;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .switch-btn-blue:disabled {
+            background: #1e293b;
+            color: #64748b;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .pulse-blue {
+            animation: pulseBlue 2s infinite;
+        }
+
+        @keyframes pulseBlue {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
+
+        .switch-message {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
         }
         
+        .switch-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .switch-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        /* Active Plan Product card block */
         .product-item-card {
             background: rgba(11, 11, 19, 0.4);
             border: 1px solid var(--glass-border);
@@ -302,82 +462,14 @@
             font-family: 'Outfit', sans-serif;
             text-align: left;
             transition: all 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
         }
         
         .product-item-card:hover {
-            background: rgba(11, 11, 19, 0.6);
+            background: rgba(11, 11, 19, 0.65);
             border-color: rgba(124, 58, 237, 0.25);
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
-        }
-
-        /* Product Pills */
-        .products-pill-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 6px;
-        }
-        
-        .product-pill {
-            padding: 6px 14px;
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid rgba(124, 58, 237, 0.25);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--color-primary-light);
-        }
-        
-        /* Progress Timeline */
-        .progress-section {
-            margin-bottom: 28px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        
-        .progress-label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--color-text-light);
-            text-transform: uppercase;
-        }
-        
-        .progress-percent {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--color-primary-light);
-        }
-        
-        .progress-track {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-            border-radius: 6px;
-            transition: width 0.6s ease;
-        }
-        
-        .progress-dates {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: var(--color-text-light);
-            font-weight: 500;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255,255,255,0.05);
+            transform: translateY(-1px);
         }
         
         /* Error Box */
@@ -639,11 +731,18 @@
                     <i class="fa-solid fa-gift gift-icon" aria-hidden="true" style="color: #FF5A79;"></i> Get Free Canva 🎁
                 </a>
                 <a href="#whatsapp" class="social-btn" id="whatsapp-btn"><i class="fa-brands fa-whatsapp social-icon" aria-hidden="true"></i> WhatsApp</a>
+                <button id="theme-toggle" class="social-btn" style="padding: 0; width: 38px; height: 38px; justify-content: center; border-radius: 50%;" title="Toggle Theme">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
             </div>
         </div>
     </header>
 
     <div class="status-container">
+        <!-- Ambient Background Glows -->
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
         <div class="status-header animate-on-scroll">
             <h1 class="hero-title" style="font-size: 3rem; margin-bottom: 10px;">Check Status</h1>
             <p class="hero-subtitle" style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Enter your email below to check the real-time activation status of your SoftSync software.</p>
@@ -682,35 +781,40 @@
 
             <!-- Success result container -->
             <div id="check-result" class="check-result-container hidden" style="margin-top: 32px;">
-                <!-- Centered building icon card -->
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div class="org-icon-container" style="width: 70px; height: 70px; background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%); border-radius: 20px; display: inline-flex; align-items: center; justify-content: center; color: white; font-size: 28px; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);">
-                        🏢
+                <!-- Consolidated Organization Status Card -->
+                <div id="team-status-card" class="org-status-card hidden">
+                    <div class="org-card-header">
+                        <div class="org-icon-container">
+                            🏢
+                        </div>
+                        <div class="org-text-details">
+                            <span class="org-label">Organization</span>
+                            <div class="org-name-row">
+                                <h2 id="result-org" class="org-title">CloudMatrixSystems</h2>
+                                <span id="team-status-badge" class="status-badge"><span id="team-status-label">Normal</span></span>
+                            </div>
+                            <div id="result-team-changed-text" class="team-changed-text hidden">
+                                Team changed <span id="result-change-time" style="font-weight: 700;">1 day ago</span> from <span id="result-change-prev">RapidCore Technologies</span> to <span id="result-change-curr" style="font-weight: 700;">CloudMatrixSystems</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Organization details -->
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <span class="result-label" style="justify-content: center; font-size: 0.85rem; letter-spacing: 0.08em; font-weight: 700; color: var(--color-text-light); text-transform: uppercase;">Organization</span>
-                    <h2 id="result-org" class="result-value" style="font-size: 2.2rem; font-weight: 800; color: var(--color-text); margin-top: 8px; font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;">CloudMatrixSystems</h2>
-                    
-                    <!-- Team changed text display -->
-                    <div id="result-team-changed-text" style="font-size: 0.95rem; color: var(--color-text-light); margin-top: 12px; font-weight: 500;" class="hidden">
-                        Team changed <span id="result-change-time" style="font-weight: 700;">1 day ago</span> from <span id="result-change-prev">RapidCore Technologies</span> to <span id="result-change-curr" style="font-weight: 700;">CloudMatrixSystems</span>
+                    <!-- Team change option if available - Shown ABOVE status message for user attention -->
+                    <div id="result-switch-container" class="switch-section inline-switch hidden">
+                        <div class="switch-notice-title">Need to change to an active organization?</div>
+                        <div class="switch-notice-desc">You can switch to an active server/team automatically. Please click the button below 👇</div>
+                        <button id="switch-org-btn" class="switch-btn-blue pulse-blue">
+                            <span class="btn-text"><i class="fa-solid fa-arrows-rotate"></i> Press here to change to an active team</span>
+                            <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i> Switching...</span>
+                        </button>
+                        <div id="switch-status-message" class="switch-message hidden"></div>
                     </div>
-                </div>
 
-                <!-- Team Status Card (Normal, Inactive, etc.) -->
-                <div id="team-status-card" class="status-card-box hidden" style="margin-bottom: 28px; padding: 24px; background: rgba(255, 255, 255, 0.02); border: 1.5px solid var(--glass-border); border-left: 5px solid #ff9f1c; border-radius: 16px; text-align: center; transition: all 0.3s ease;">
-                    <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--color-text); margin-bottom: 12px; font-family: 'Outfit', sans-serif;">Team status: <span id="team-status-label">Normal</span></h3>
-                    <div style="margin-bottom: 12px;">
-                        <span id="team-status-badge" class="status-badge" style="background: #10b981; color: white; padding: 6px 16px; font-size: 0.8rem; font-weight: 800; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block;">Normal</span>
-                    </div>
-                    <p id="team-status-message" style="color: var(--color-text-light); font-size: 0.95rem; margin: 0;">This team is operating normally.</p>
+                    <p id="team-status-message" class="org-status-desc">This team is operating normally.</p>
                 </div>
 
                 <!-- Active Plan Products list -->
-                <div style="text-align: left; margin-bottom: 28px;">
+                <div style="text-align: left; margin-bottom: 28px; margin-top: 28px;">
                     <span class="result-label" style="font-size: 0.85rem; letter-spacing: 0.08em; font-weight: 700; color: var(--color-text-light); text-transform: uppercase; margin-bottom: 12px; display: block;">Active Plan</span>
                     <div id="result-products-list" style="display: flex; flex-direction: column; gap: 12px;">
                         <!-- Products will go here as single styled cards -->
@@ -718,7 +822,7 @@
                 </div>
 
                 <!-- Last Transfer Notice if any -->
-                <div id="result-transfer-container" class="transfer-section hidden">
+                <div id="result-transfer-container" class="transfer-section hidden" style="margin-top: 24px;">
                     <h4 class="transfer-title"><i class="fa-solid fa-arrow-right-arrow-left"></i> Organization History</h4>
                     <div class="transfer-path">
                         <span id="result-transfer-old" class="transfer-old">Old Org</span>
@@ -728,26 +832,8 @@
                     <span id="result-transfer-date" class="transfer-date">Changed: 01/01/2026</span>
                 </div>
 
-                <!-- Team change option if available -->
-                <div id="result-switch-container" class="switch-section hidden">
-                    <div class="switch-card">
-                        <div class="switch-card-header">
-                            <i class="fa-solid fa-arrows-spin switch-icon"></i>
-                            <div class="switch-card-text">
-                                <strong>Need to change to an active organization?</strong>
-                                <p>You can switch to an active server/team automatically.</p>
-                            </div>
-                        </div>
-                        <button id="switch-org-btn" class="switch-btn">
-                            <span class="btn-text"><i class="fa-solid fa-rotate"></i> Press here to change organization</span>
-                            <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i> Switching...</span>
-                        </button>
-                        <div id="switch-status-message" class="switch-message hidden"></div>
-                    </div>
-                </div>
-
                 <!-- Important Notice Banner if any -->
-                <div id="result-notice-container" class="notice-section hidden">
+                <div id="result-notice-container" class="notice-section hidden" style="margin-top: 24px;">
                     <i class="fa-solid fa-circle-exclamation notice-icon"></i>
                     <p id="result-notice" class="notice-text">Important notice message here.</p>
                 </div>
@@ -772,6 +858,9 @@
     <!-- Native Script for status checking and animations -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Mock state tracker for test email organization switches
+            let hasSwitchedMock = false;
+
             // Scroll animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -817,6 +906,33 @@
             
             const noticeContainer = document.getElementById('result-notice-container');
             const noticeText = document.getElementById('result-notice');
+            
+            // Theme Toggle Logic
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeIcon = themeToggleBtn.querySelector('i');
+            
+            // Load saved theme or default to dark
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.className = 'fa-solid fa-sun';
+                    themeToggleBtn.style.color = '#ffc107'; // amber color for sun
+                } else {
+                    themeIcon.className = 'fa-solid fa-moon';
+                    themeToggleBtn.style.color = ''; // default theme text color
+                }
+            }
 
             // Relative time helper
             const L = function(e) {
@@ -850,18 +966,61 @@
                 transferContainer.classList.add('hidden');
 
                 try {
-                    // Added cache-busting timestamp parameter to prevent loading stale user status after switch
-                    const statusUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/user-status?t=${Date.now()}`);
-                    const res = await fetch(statusUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email })
-                    });
-                    const data = await res.json();
+                    let data;
+                    let isOk = true;
+                    if (email.toLowerCase() === 'test@example.com' || email.toLowerCase() === 'mock@example.com') {
+                        // Simulate network lag
+                        await new Promise(r => setTimeout(r, 1000));
+                        if (hasSwitchedMock) {
+                            data = {
+                                found: true,
+                                status: 'active',
+                                organization: { name: 'CloudMatrixSystems' },
+                                products: ['Creative Cloud Pro Configuration'],
+                                teamChange: {
+                                    changedAt: new Date().toISOString(),
+                                    previousName: 'Afyvo-CloudForge',
+                                    currentName: 'CloudMatrixSystems'
+                                },
+                                organizationStatus: {
+                                    status: 'normal',
+                                    label: 'Normal',
+                                    message: 'This team is operating normally.'
+                                }
+                            };
+                        } else {
+                            data = {
+                                found: true,
+                                status: 'inactive',
+                                organization: { name: 'Afyvo-CloudForge' },
+                                products: ['Creative Cloud Pro Configuration'],
+                                teamChange: {
+                                    changedAt: new Date(Date.now() - 2 * 24 * 3600 * 1000).toISOString(),
+                                    previousName: 'SkyVista Systems',
+                                    currentName: 'Afyvo-CloudForge'
+                                },
+                                organizationStatus: {
+                                    status: 'inactive',
+                                    label: 'Inactive',
+                                    message: 'This team is currently inactive.'
+                                }
+                            };
+                        }
+                    } else {
+                        // Added cache-busting timestamp parameter to prevent loading stale user status after switch
+                        const statusUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/user-status?t=${Date.now()}`);
+                        const res = await fetch(statusUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ email })
+                        });
+                        isOk = res.ok;
+                        data = await res.json();
+                    }
 
-                    if (res.ok && data.found) {
+                    if (isOk && data && data.found) {
                         // Organization Name
                         orgSpan.textContent = (data.organization && data.organization.name) ? data.organization.name : 'Unknown';
 
@@ -876,46 +1035,39 @@
                         }
 
                         // Team Status Card Info
-                        if (data.organizationStatus) {
-                            teamCardDiv.classList.remove('hidden');
-                            const status = data.organizationStatus.status || 'normal';
-                            const label = data.organizationStatus.label || status;
-                            const message = data.organizationStatus.message || '';
-                            
-                            teamLabelSpan.textContent = label;
-                            teamBadgeSpan.textContent = label;
-                            teamMessageP.textContent = message;
-                            
-                            // Color mapping for left border and badge
-                            if (status === 'normal' || status === 'active') {
-                                teamCardDiv.style.borderLeftColor = '#10b981';
-                                teamBadgeSpan.style.backgroundColor = '#10b981';
-                            } else if (status === 'updating') {
-                                teamCardDiv.style.borderLeftColor = '#f59e0b';
-                                teamBadgeSpan.style.backgroundColor = '#f59e0b';
-                            } else {
-                                teamCardDiv.style.borderLeftColor = '#ef4444';
-                                teamBadgeSpan.style.backgroundColor = '#ef4444';
-                            }
+                        // Determine overall status class and text
+                        let isTeamActive = true;
+                        let displayStatus = 'ACTIVE';
+                        let displayClass = 'status-badge status-active';
+                        
+                        const status = data.organizationStatus ? (data.organizationStatus.status || 'normal') : (data.status || 'active');
+                        const message = data.organizationStatus ? (data.organizationStatus.message || '') : (status === 'active' ? 'This team is operating normally.' : 'This team is inactive.');
+                        
+                        if (status === 'normal' || status === 'active') {
+                            displayStatus = 'ACTIVE';
+                            displayClass = 'status-badge status-active';
+                            isTeamActive = true;
+                            teamCardDiv.style.borderColor = '#10b981';
+                            teamCardDiv.style.boxShadow = '0 0 25px rgba(16, 185, 129, 0.15), 0 15px 35px rgba(0, 0, 0, 0.3)';
+                        } else if (status === 'updating') {
+                            displayStatus = 'UPDATING';
+                            displayClass = 'status-badge status-warning';
+                            isTeamActive = true;
+                            teamCardDiv.style.borderColor = '#f59e0b';
+                            teamCardDiv.style.boxShadow = '0 0 25px rgba(245, 158, 11, 0.15), 0 15px 35px rgba(0, 0, 0, 0.3)';
                         } else {
-                            // Fallback using general status if organizationStatus is missing
-                            teamCardDiv.classList.remove('hidden');
-                            const status = data.status || 'active';
-                            const label = status === 'active' ? 'Normal' : status;
-                            const message = status === 'active' ? 'This team is operating normally.' : 'This team is inactive.';
-                            
-                            teamLabelSpan.textContent = label;
-                            teamBadgeSpan.textContent = label;
-                            teamMessageP.textContent = message;
-
-                            if (status === 'active') {
-                                teamCardDiv.style.borderLeftColor = '#10b981';
-                                teamBadgeSpan.style.backgroundColor = '#10b981';
-                            } else {
-                                teamCardDiv.style.borderLeftColor = '#ef4444';
-                                teamBadgeSpan.style.backgroundColor = '#ef4444';
-                            }
+                            displayStatus = 'INACTIVE';
+                            displayClass = 'status-badge status-expired';
+                            isTeamActive = false;
+                            teamCardDiv.style.borderColor = '#ef4444';
+                            teamCardDiv.style.boxShadow = '0 0 25px rgba(239, 68, 68, 0.15), 0 15px 35px rgba(0, 0, 0, 0.3)';
                         }
+                        
+                        teamCardDiv.classList.remove('hidden');
+                        teamLabelSpan.textContent = displayStatus;
+                        teamBadgeSpan.className = displayClass;
+                        teamBadgeSpan.style.backgroundColor = '';
+                        teamMessageP.textContent = message;
 
                         // Render Active Plan Products
                         productsListDiv.innerHTML = '';
@@ -981,16 +1133,25 @@
             // Check if organization auto-switch option is available
             async function checkSwitchOption(email) {
                 try {
-                    const optionsUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/credits-pool/public/org-switch/options?t=${Date.now()}`);
-                    const res = await fetch(optionsUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email })
-                    });
-                    if (res.ok) {
-                        const data = await res.json();
+                    let data;
+                    if (email.toLowerCase() === 'test@example.com' || email.toLowerCase() === 'mock@example.com') {
+                        data = {
+                            available: true,
+                            cooldownActive: false
+                        };
+                    } else {
+                        const optionsUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/credits-pool/public/org-switch/options?t=${Date.now()}`);
+                        const res = await fetch(optionsUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ email })
+                        });
+                        if (!res.ok) return;
+                        data = await res.json();
+                    }
+                    if (data) {
                         if (data.available) {
                             switchContainer.classList.remove('hidden');
                             switchBtn.disabled = data.cooldownActive;
@@ -1020,17 +1181,29 @@
                 switchMessage.className = 'switch-message hidden';
 
                 try {
-                    const switchUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/credits-pool/public/org-switch`);
-                    const res = await fetch(switchUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email })
-                    });
-                    const data = await res.json();
+                    let data;
+                    let isOk = true;
+                    if (email.toLowerCase() === 'test@example.com' || email.toLowerCase() === 'mock@example.com') {
+                        await new Promise(r => setTimeout(r, 1500));
+                        hasSwitchedMock = true;
+                        data = {
+                            success: true,
+                            message: 'Successfully moved to a new active organization! Reloading your status...'
+                        };
+                    } else {
+                        const switchUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/credits-pool/public/org-switch`);
+                        const res = await fetch(switchUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ email })
+                        });
+                        isOk = res.ok;
+                        data = await res.json();
+                    }
 
-                    if (res.ok && data.success) {
+                    if (isOk && data && data.success) {
                         switchMessage.textContent = data.message || 'Successfully moved to a new active organization! Reloading your status...';
                         switchMessage.className = 'switch-message success';
                         switchMessage.classList.remove('hidden');
