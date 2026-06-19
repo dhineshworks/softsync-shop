@@ -35,23 +35,6 @@
             padding: 40px 20px 20px;
             z-index: 10;
         }
-        .status-iframe-wrapper {
-            width: 100%;
-            z-index: 10;
-            padding: 0 20px 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .status-iframe-wrapper iframe {
-            width: 100%;
-            min-height: 800px;
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-        }
         .status-support-box {
             margin: 0 auto 60px;
             max-width: 800px;
@@ -112,6 +95,525 @@
                 font-size: 1.2rem;
             }
         }
+
+        /* Native Status Checker Styles */
+        .status-checker-card {
+            width: 90%;
+            max-width: 650px;
+            margin: 0 auto 60px;
+            padding: 40px;
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), var(--shadow-glow);
+            backdrop-filter: blur(24px) saturate(120%);
+            -webkit-backdrop-filter: blur(24px) saturate(120%);
+            z-index: 10;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .status-checker-card:hover {
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 50px rgba(124, 58, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-color: rgba(124, 58, 237, 0.25);
+            transform: translateY(-4px);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-primary-light);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            color: var(--color-primary-light);
+            font-size: 1.1rem;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 18px 20px 18px 52px;
+            font-size: 1rem;
+            background: rgba(3, 3, 5, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-sm);
+            color: var(--color-text);
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: 'Inter', sans-serif;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-input:focus {
+            border-color: var(--color-primary-light);
+            background: rgba(3, 3, 5, 0.8);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), inset 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .check-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-secondary) 100%);
+            background-size: 200% auto;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
+        }
+        
+        .check-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background-position: right center;
+            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.45), 0 0 30px rgba(255, 90, 121, 0.2);
+        }
+        
+        .check-btn:disabled {
+            background: #27272a;
+            color: #71717a;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+        
+        /* Result Badges */
+        .result-status-badge-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+        
+        .status-badge {
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+        
+        .status-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #F59E0B;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
+        }
+        
+        .status-expired {
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.1);
+        }
+        
+        /* Details Grid */
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+        
+        .result-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        
+        .result-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(124, 58, 237, 0.2);
+        }
+        
+        .result-item.full-width {
+            grid-column: span 2;
+        }
+        
+        .result-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .result-label i {
+            color: var(--color-primary-light);
+        }
+        
+        .result-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--color-text);
+            word-break: break-word;
+        }
+        
+        .product-item-card {
+            background: rgba(11, 11, 19, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-text);
+            font-family: 'Outfit', sans-serif;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        
+        .product-item-card:hover {
+            background: rgba(11, 11, 19, 0.6);
+            border-color: rgba(124, 58, 237, 0.25);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
+        }
+
+        /* Product Pills */
+        .products-pill-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        
+        .product-pill {
+            padding: 6px 14px;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.25);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-primary-light);
+        }
+        
+        /* Progress Timeline */
+        .progress-section {
+            margin-bottom: 28px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .progress-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+        }
+        
+        .progress-percent {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-primary-light);
+        }
+        
+        .progress-track {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            border-radius: 6px;
+            transition: width 0.6s ease;
+        }
+        
+        .progress-dates {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+            font-weight: 500;
+        }
+        
+        /* Error Box */
+        .check-error-container {
+            margin-top: 24px;
+            padding: 20px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-left: 4px solid #EF4444;
+            border-radius: var(--radius-sm);
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            animation: slide-down 0.4s ease;
+        }
+        
+        .error-icon {
+            color: #EF4444;
+            font-size: 1.4rem;
+            margin-top: 2px;
+        }
+        
+        .error-text-wrapper h3 {
+            font-size: 1.05rem;
+            color: var(--color-text);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        
+        .error-text-wrapper p {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin: 0;
+        }
+        
+        /* Notice Section */
+        .notice-section {
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-left: 4px solid #F59E0B;
+            border-radius: var(--radius-sm);
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .notice-icon {
+            color: #F59E0B;
+            font-size: 1.1rem;
+            margin-top: 3px;
+        }
+        
+        .notice-text {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* Transfer Box */
+        .transfer-section {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--glass-border);
+            border-radius: var(--radius-sm);
+            text-align: left;
+        }
+        
+        .transfer-title {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            margin-bottom: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .transfer-path {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .transfer-old {
+            color: var(--color-text-light);
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+        
+        .transfer-arrow {
+            color: var(--color-primary-light);
+            font-size: 0.8rem;
+        }
+        
+        .transfer-new {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+        
+        .transfer-date {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+        }
+        
+        /* Switch Card */
+        .switch-section {
+            margin-bottom: 24px;
+        }
+        
+        .switch-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(255, 90, 121, 0.05) 100%);
+            border: 1.5px solid rgba(124, 58, 237, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            text-align: left;
+        }
+        
+        .switch-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .switch-icon {
+            color: var(--color-primary-light);
+            font-size: 1.4rem;
+            margin-top: 2px;
+        }
+        
+        .switch-card-text strong {
+            display: block;
+            font-size: 1.05rem;
+            color: var(--color-text);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        
+        .switch-card-text p {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin: 0;
+            line-height: 1.45;
+        }
+        
+        .switch-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .switch-btn:hover:not(:disabled) {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+        
+        .switch-btn:disabled {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--glass-border);
+            color: var(--color-text-light);
+            cursor: not-allowed;
+        }
+        
+        .switch-message {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .switch-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .switch-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        /* General Utilities */
+        .hidden {
+            display: none !important;
+        }
+        
+        .btn-loader {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 576px) {
+            .status-checker-card {
+                padding: 24px;
+                width: 95%;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-item.full-width {
+                grid-column: span 1;
+            }
+        }
     </style>
 </head>
 
@@ -147,8 +649,109 @@
             <p class="hero-subtitle" style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Enter your email below to check the real-time activation status of your SoftSync software.</p>
         </div>
 
-        <div class="status-iframe-wrapper animate-on-scroll">
-            <iframe src="https://reseller.ado-besoft.com/status" title="Check Subscription Status"></iframe>
+        <!-- Native Subscription Check Card -->
+        <div class="status-checker-card animate-on-scroll">
+            <!-- Logo Section -->
+            <div class="checker-logo-wrapper" style="text-align: center; margin-bottom: 32px;">
+                <img src="assets/images/softsync.png" alt="SoftSync" class="logo-image" style="width: 50px; height: 50px; margin-bottom: 8px;">
+                <span class="logo-text" style="font-size: 1.8rem; font-weight: 800; display: block; background: linear-gradient(135deg, var(--color-text) 20%, var(--color-primary-light)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">SoftSync</span>
+            </div>
+
+            <form id="status-check-form">
+                <div class="form-group">
+                    <label for="check-email" class="form-label">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="check-email" class="form-input" placeholder="Enter your registered email address" required>
+                    </div>
+                </div>
+                <button type="submit" id="check-submit-btn" class="btn check-btn">
+                    <span class="btn-text"><i class="fa-solid fa-magnifying-glass"></i> Check Status</span>
+                    <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i> Checking...</span>
+                </button>
+            </form>
+
+            <!-- Error message container -->
+            <div id="check-error" class="check-error-container hidden">
+                <i class="fa-solid fa-circle-xmark error-icon"></i>
+                <div class="error-text-wrapper">
+                    <h3 id="error-title">No Subscription Found</h3>
+                    <p id="error-desc">Please verify the email address is correct or contact support.</p>
+                </div>
+            </div>
+
+            <!-- Success result container -->
+            <div id="check-result" class="check-result-container hidden" style="margin-top: 32px;">
+                <!-- Centered building icon card -->
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div class="org-icon-container" style="width: 70px; height: 70px; background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%); border-radius: 20px; display: inline-flex; align-items: center; justify-content: center; color: white; font-size: 28px; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);">
+                        🏢
+                    </div>
+                </div>
+
+                <!-- Organization details -->
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <span class="result-label" style="justify-content: center; font-size: 0.85rem; letter-spacing: 0.08em; font-weight: 700; color: var(--color-text-light); text-transform: uppercase;">Organization</span>
+                    <h2 id="result-org" class="result-value" style="font-size: 2.2rem; font-weight: 800; color: var(--color-text); margin-top: 8px; font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;">CloudMatrixSystems</h2>
+                    
+                    <!-- Team changed text display -->
+                    <div id="result-team-changed-text" style="font-size: 0.95rem; color: var(--color-text-light); margin-top: 12px; font-weight: 500;" class="hidden">
+                        Team changed <span id="result-change-time" style="font-weight: 700;">1 day ago</span> from <span id="result-change-prev">RapidCore Technologies</span> to <span id="result-change-curr" style="font-weight: 700;">CloudMatrixSystems</span>
+                    </div>
+                </div>
+
+                <!-- Team Status Card (Normal, Inactive, etc.) -->
+                <div id="team-status-card" class="status-card-box hidden" style="margin-bottom: 28px; padding: 24px; background: rgba(255, 255, 255, 0.02); border: 1.5px solid var(--glass-border); border-left: 5px solid #ff9f1c; border-radius: 16px; text-align: center; transition: all 0.3s ease;">
+                    <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--color-text); margin-bottom: 12px; font-family: 'Outfit', sans-serif;">Team status: <span id="team-status-label">Normal</span></h3>
+                    <div style="margin-bottom: 12px;">
+                        <span id="team-status-badge" class="status-badge" style="background: #10b981; color: white; padding: 6px 16px; font-size: 0.8rem; font-weight: 800; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block;">Normal</span>
+                    </div>
+                    <p id="team-status-message" style="color: var(--color-text-light); font-size: 0.95rem; margin: 0;">This team is operating normally.</p>
+                </div>
+
+                <!-- Active Plan Products list -->
+                <div style="text-align: left; margin-bottom: 28px;">
+                    <span class="result-label" style="font-size: 0.85rem; letter-spacing: 0.08em; font-weight: 700; color: var(--color-text-light); text-transform: uppercase; margin-bottom: 12px; display: block;">Active Plan</span>
+                    <div id="result-products-list" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Products will go here as single styled cards -->
+                    </div>
+                </div>
+
+                <!-- Last Transfer Notice if any -->
+                <div id="result-transfer-container" class="transfer-section hidden">
+                    <h4 class="transfer-title"><i class="fa-solid fa-arrow-right-arrow-left"></i> Organization History</h4>
+                    <div class="transfer-path">
+                        <span id="result-transfer-old" class="transfer-old">Old Org</span>
+                        <i class="fa-solid fa-right-long transfer-arrow"></i>
+                        <span id="result-transfer-new" class="transfer-new">New Org</span>
+                    </div>
+                    <span id="result-transfer-date" class="transfer-date">Changed: 01/01/2026</span>
+                </div>
+
+                <!-- Team change option if available -->
+                <div id="result-switch-container" class="switch-section hidden">
+                    <div class="switch-card">
+                        <div class="switch-card-header">
+                            <i class="fa-solid fa-arrows-spin switch-icon"></i>
+                            <div class="switch-card-text">
+                                <strong>Need to change to an active organization?</strong>
+                                <p>You can switch to an active server/team automatically.</p>
+                            </div>
+                        </div>
+                        <button id="switch-org-btn" class="switch-btn">
+                            <span class="btn-text"><i class="fa-solid fa-rotate"></i> Press here to change organization</span>
+                            <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i> Switching...</span>
+                        </button>
+                        <div id="switch-status-message" class="switch-message hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Important Notice Banner if any -->
+                <div id="result-notice-container" class="notice-section hidden">
+                    <i class="fa-solid fa-circle-exclamation notice-icon"></i>
+                    <p id="result-notice" class="notice-text">Important notice message here.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Support Box -->
@@ -166,9 +769,10 @@
         </div>
     </div>
 
-    <!-- Minimal Script for animations -->
+    <!-- Native Script for status checking and animations -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Scroll animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -177,6 +781,289 @@
                 });
             }, { threshold: 0.1 });
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+            // Status Checker API urls
+            const API_BASE = 'https://reseller.ado-besoft.com/api';
+            const PROXY_PREFIX = 'https://corsproxy.io/?url=';
+
+            const statusForm = document.getElementById('status-check-form');
+            const submitBtn = document.getElementById('check-submit-btn');
+            const checkEmail = document.getElementById('check-email');
+            
+            const errorDiv = document.getElementById('check-error');
+            const resultDiv = document.getElementById('check-result');
+            
+            const orgSpan = document.getElementById('result-org');
+            const teamChangedTextDiv = document.getElementById('result-team-changed-text');
+            const changeTimeSpan = document.getElementById('result-change-time');
+            const changePrevSpan = document.getElementById('result-change-prev');
+            const changeCurrSpan = document.getElementById('result-change-curr');
+            
+            const teamCardDiv = document.getElementById('team-status-card');
+            const teamLabelSpan = document.getElementById('team-status-label');
+            const teamBadgeSpan = document.getElementById('team-status-badge');
+            const teamMessageP = document.getElementById('team-status-message');
+            
+            const productsListDiv = document.getElementById('result-products-list');
+            
+            const transferContainer = document.getElementById('result-transfer-container');
+            const transferOld = document.getElementById('result-transfer-old');
+            const transferNew = document.getElementById('result-transfer-new');
+            const transferDate = document.getElementById('result-transfer-date');
+            
+            const switchContainer = document.getElementById('result-switch-container');
+            const switchBtn = document.getElementById('switch-org-btn');
+            const switchMessage = document.getElementById('switch-status-message');
+            
+            const noticeContainer = document.getElementById('result-notice-container');
+            const noticeText = document.getElementById('result-notice');
+
+            // Relative time helper
+            const L = function(e) {
+                let t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : 0;
+                if (!e) return "";
+                const n = new Date(e).getTime();
+                const a = Math.max(0, Math.floor((Date.now() + 0 * t - n) / 1e3));
+                if (a < 60) return `${a || 1} second${1 === a ? "" : "s"} ago`;
+                const s = Math.floor(a / 60);
+                if (s < 60) return `${s} minute${1 === s ? "" : "s"} ago`;
+                const r = Math.floor(s / 60);
+                if (r < 24) return `${r} hour${1 === r ? "" : "s"} ago`;
+                const i = Math.floor(r / 24);
+                return `${i} day${1 === i ? "" : "s"} ago`;
+            };
+
+            // Refactored status checker callback
+            async function performStatusCheck(email) {
+                if (!email) return;
+
+                // Reset and show loader
+                submitBtn.disabled = true;
+                submitBtn.querySelector('.btn-text').classList.add('hidden');
+                submitBtn.querySelector('.btn-loader').classList.remove('hidden');
+                
+                errorDiv.classList.add('hidden');
+                resultDiv.classList.add('hidden');
+                teamCardDiv.classList.add('hidden');
+                switchContainer.classList.add('hidden');
+                noticeContainer.classList.add('hidden');
+                transferContainer.classList.add('hidden');
+
+                try {
+                    // Added cache-busting timestamp parameter to prevent loading stale user status after switch
+                    const statusUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/user-status?t=${Date.now()}`);
+                    const res = await fetch(statusUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await res.json();
+
+                    if (res.ok && data.found) {
+                        // Organization Name
+                        orgSpan.textContent = (data.organization && data.organization.name) ? data.organization.name : 'Unknown';
+
+                        // Team Changed History Header
+                        if (data.teamChange && data.teamChange.changedAt) {
+                            teamChangedTextDiv.classList.remove('hidden');
+                            changeTimeSpan.textContent = L(data.teamChange.changedAt);
+                            changePrevSpan.textContent = data.teamChange.previousName || '';
+                            changeCurrSpan.textContent = data.teamChange.currentName || (data.organization && data.organization.name) || '';
+                        } else {
+                            teamChangedTextDiv.classList.add('hidden');
+                        }
+
+                        // Team Status Card Info
+                        if (data.organizationStatus) {
+                            teamCardDiv.classList.remove('hidden');
+                            const status = data.organizationStatus.status || 'normal';
+                            const label = data.organizationStatus.label || status;
+                            const message = data.organizationStatus.message || '';
+                            
+                            teamLabelSpan.textContent = label;
+                            teamBadgeSpan.textContent = label;
+                            teamMessageP.textContent = message;
+                            
+                            // Color mapping for left border and badge
+                            if (status === 'normal' || status === 'active') {
+                                teamCardDiv.style.borderLeftColor = '#10b981';
+                                teamBadgeSpan.style.backgroundColor = '#10b981';
+                            } else if (status === 'updating') {
+                                teamCardDiv.style.borderLeftColor = '#f59e0b';
+                                teamBadgeSpan.style.backgroundColor = '#f59e0b';
+                            } else {
+                                teamCardDiv.style.borderLeftColor = '#ef4444';
+                                teamBadgeSpan.style.backgroundColor = '#ef4444';
+                            }
+                        } else {
+                            // Fallback using general status if organizationStatus is missing
+                            teamCardDiv.classList.remove('hidden');
+                            const status = data.status || 'active';
+                            const label = status === 'active' ? 'Normal' : status;
+                            const message = status === 'active' ? 'This team is operating normally.' : 'This team is inactive.';
+                            
+                            teamLabelSpan.textContent = label;
+                            teamBadgeSpan.textContent = label;
+                            teamMessageP.textContent = message;
+
+                            if (status === 'active') {
+                                teamCardDiv.style.borderLeftColor = '#10b981';
+                                teamBadgeSpan.style.backgroundColor = '#10b981';
+                            } else {
+                                teamCardDiv.style.borderLeftColor = '#ef4444';
+                                teamBadgeSpan.style.backgroundColor = '#ef4444';
+                            }
+                        }
+
+                        // Render Active Plan Products
+                        productsListDiv.innerHTML = '';
+                        if (data.products && data.products.length > 0) {
+                            data.products.forEach(p => {
+                                const card = document.createElement('div');
+                                card.className = 'product-item-card';
+                                card.style.display = 'flex';
+                                card.style.alignItems = 'center';
+                                card.style.gap = '14px';
+                                card.innerHTML = `
+                                    <i class="fa-solid fa-cube product-card-icon" style="color: var(--color-accent); font-size: 1.25rem;"></i>
+                                    <span class="product-card-name">${p}</span>
+                                `;
+                                productsListDiv.appendChild(card);
+                            });
+                        } else {
+                            productsListDiv.innerHTML = '<div class="product-item-card" style="font-weight: 500; color: var(--color-text-light); display: flex; align-items: center; gap: 14px;"><i class="fa-solid fa-circle-info" style="color: var(--color-text-light); font-size: 1.25rem;"></i> No active plans found</div>';
+                        }
+
+                        // Historical transfers if any
+                        if (data.lastTransfer) {
+                            transferContainer.classList.remove('hidden');
+                            transferOld.textContent = data.lastTransfer.oldOrganizationName || 'Old Org';
+                            transferNew.textContent = data.lastTransfer.newOrganizationName || (data.organization && data.organization.name) || 'New Org';
+                            transferDate.textContent = `Changed: ${new Date(data.lastTransfer.date).toLocaleDateString()}`;
+                        }
+
+                        // Notice text if any
+                        if (data.notice) {
+                            noticeContainer.classList.remove('hidden');
+                            noticeText.textContent = data.notice;
+                        }
+
+                        // Display the result container
+                        resultDiv.classList.remove('hidden');
+
+                        // Proactively check if auto-switch is available for this user
+                        checkSwitchOption(email);
+                    } else {
+                        // Display error
+                        document.getElementById('error-title').textContent = 'No Active Subscription';
+                        document.getElementById('error-desc').textContent = data.error || 'No active subscription was found for this email address. Please make sure the email is typed correctly or contact support.';
+                        errorDiv.classList.remove('hidden');
+                    }
+                } catch (err) {
+                    console.error('Fetch error:', err);
+                    document.getElementById('error-title').textContent = 'Connection Error';
+                    document.getElementById('error-desc').textContent = 'Could not establish connection to check your status. Please try again or check your internet connection.';
+                    errorDiv.classList.remove('hidden');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('.btn-text').classList.remove('hidden');
+                    submitBtn.querySelector('.btn-loader').classList.add('hidden');
+                }
+            }
+
+            statusForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                performStatusCheck(checkEmail.value.trim());
+            });
+
+            // Check if organization auto-switch option is available
+            async function checkSwitchOption(email) {
+                try {
+                    const optionsUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/credits-pool/public/org-switch/options?t=${Date.now()}`);
+                    const res = await fetch(optionsUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.available) {
+                            switchContainer.classList.remove('hidden');
+                            switchBtn.disabled = data.cooldownActive;
+                            
+                            if (data.cooldownActive) {
+                                switchBtn.querySelector('.btn-text').innerHTML = '<i class="fa-solid fa-clock"></i> Recently switched — please wait';
+                            } else {
+                                switchBtn.querySelector('.btn-text').innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Press here to change to an active team';
+                            }
+                            switchBtn.setAttribute('data-email', email);
+                        }
+                    }
+                } catch (err) {
+                    console.error('Switch check error:', err);
+                }
+            }
+
+            // Handle organization switch execution
+            switchBtn.addEventListener('click', async () => {
+                const email = switchBtn.getAttribute('data-email');
+                if (!email) return;
+
+                switchBtn.disabled = true;
+                switchBtn.querySelector('.btn-text').classList.add('hidden');
+                switchBtn.querySelector('.btn-loader').classList.remove('hidden');
+                
+                switchMessage.className = 'switch-message hidden';
+
+                try {
+                    const switchUrl = PROXY_PREFIX + encodeURIComponent(`${API_BASE}/credits-pool/public/org-switch`);
+                    const res = await fetch(switchUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await res.json();
+
+                    if (res.ok && data.success) {
+                        switchMessage.textContent = data.message || 'Successfully moved to a new active organization! Reloading your status...';
+                        switchMessage.className = 'switch-message success';
+                        switchMessage.classList.remove('hidden');
+
+                        // Immediately perform check after a short wait (to let database commit settle)
+                        setTimeout(() => {
+                            performStatusCheck(email);
+                        }, 2000);
+                    } else {
+                        switchMessage.textContent = data.error || 'Failed to switch organization. Please call support or try again.';
+                        switchMessage.className = 'switch-message error';
+                        switchMessage.classList.remove('hidden');
+                        switchBtn.disabled = false;
+                    }
+                } catch (err) {
+                    console.error('Switch request error:', err);
+                    switchMessage.textContent = 'Connection error. Please try again.';
+                    switchMessage.className = 'switch-message error';
+                    switchMessage.classList.remove('hidden');
+                    switchBtn.disabled = false;
+                } finally {
+                    switchBtn.querySelector('.btn-text').classList.remove('hidden');
+                    switchBtn.querySelector('.btn-loader').classList.add('hidden');
+                }
+            });
+
+            // Automatically check if email is provided in the URL query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const emailParam = urlParams.get('email') || urlParams.get('emailParam');
+            if (emailParam && emailParam.trim().includes('@')) {
+                checkEmail.value = emailParam.trim();
+                performStatusCheck(emailParam.trim());
+            }
         });
     </script>
 </body>
