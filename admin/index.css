@@ -1890,3 +1890,61 @@ body {
   font-size: 1.05rem;
   margin-top: 10px;
 }
+
+@media (max-width: 992px) {
+    .app-shell {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .sidebar-brand {
+        padding: 16px 20px;
+    }
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px;
+        gap: 6px;
+    }
+    .nav-item {
+        width: auto;
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+    .sidebar-cta {
+        display: none;
+    }
+    .generator-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .topbar {
+        padding: 12px 20px;
+    }
+    .page-content {
+        padding: 20px 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .analytics-bar {
+        grid-template-columns: 1fr 1fr;
+    }
+    .page-header-actions {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .page-header-actions button,
+    .page-header-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

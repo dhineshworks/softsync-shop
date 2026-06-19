@@ -1220,10 +1220,79 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .hero h1 { font-size: 52px; }
-    .hero p { font-size: 18px; }
+    /* Global Nav Link Adjustments */
+    .global-nav-container {
+        justify-content: center;
+        gap: 8px;
+        padding: 0 16px;
+        flex-wrap: wrap;
+    }
+    .global-nav-link {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    /* Header Social Links Hiding */
+    #facebook-btn,
+    #instagram-btn,
+    #whatsapp-btn {
+        display: none !important;
+    }
+
+    /* Hero Typography */
+    .hero h1 { font-size: 40px; }
+    .hero p { font-size: 16px; }
+
+    /* Plans section and Contact methods vertical stacks */
     .plans-grid { grid-template-columns: 1fr; }
     .contact-methods { grid-template-columns: 1fr; }
+
+    /* Promo Mascot Coordinates refinement */
+    .banner-mascot-wrapper {
+        right: 20px;
+        top: -55px;
+    }
+    .banner-mascot-bubble {
+        width: 210px;
+        bottom: 75px;
+        right: 0;
+        font-size: 12px;
+        padding: 10px 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Header layout optimization */
+    .logo-text {
+        font-size: 20px;
+    }
+    .social-btn span {
+        display: none !important;
+    }
+    .social-btn {
+        padding: 8px 12px;
+    }
+
+    /* Chatbot Mascot Bubble overflow prevention */
+    #mascot-bubble {
+        white-space: normal;
+        width: 220px;
+        max-width: calc(100vw - 80px);
+        right: 0;
+    }
+
+    /* Plan card buttons stacked layout */
+    .plan-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .plan-footer .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 { font-size: 32px; }
 }
 
 /* ─── BENEFITS SECTION ───────────────────────────────────────── */
