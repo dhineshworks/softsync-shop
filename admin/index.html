@@ -737,29 +737,445 @@ https://creativecloud.adobe.com/apps/download/creative-cloud`;
 
     // ─── STATUS CHECK PAGE ────────────────────────────────────────────────────────
     function StatusCheckPage({ toast, prefillEmail }) {
-      const url = prefillEmail 
-        ? `https://reseller.ado-besoft.com/status?email=${encodeURIComponent(prefillEmail)}`
-        : "https://reseller.ado-besoft.com/status";
+      const [email, setEmail] = useState("");
+      const [loading, setLoading] = useState(false);
+      const [result, setResult] = useState(null);
+      const [error, setError] = useState(null);
+      const [switchLoading, setSwitchLoading] = useState(false);
+      const [switchMessage, setSwitchMessage] = useState(null);
+      const [switchOptions, setSwitchOptions] = useState(null);
+
+      // Relative time helper
+      const L = (e) => {
+        if (!e) return "";
+        const n = new Date(e).getTime();
+        if (Number.isNaN(n)) return "";
+        const a = Math.max(0, Math.floor((Date.now() - n) / 1000));
+        if (a < 60) return `${a || 1} second${1 === a ? "" : "s"} ago`;
+        const s = Math.floor(a / 60);
+        if (s < 60) return `${s} minute${1 === s ? "" : "s"} ago`;
+        const r = Math.floor(s / 60);
+        if (r < 24) return `${r} hour${1 === r ? "" : "s"} ago`;
+        const i = Math.floor(r / 24);
+        return `${i} day${1 === i ? "" : "s"} ago`;
+      };
+
+      const performCheck = useCallback(async (targetEmail) => {
+        if (!targetEmail || !targetEmail.trim()) return;
+        setLoading(true);
+        setError(null);
+        setResult(null);
+        setSwitchMessage(null);
+        setSwitchOptions(null);
+
+        try {
+          const data = await makeRequest("https://reseller.ado-besoft.com/api/user-status", "POST", { email: targetEmail.trim() });
+          if (data && data.found) {
+            setResult(data);
+            
+            // Check switch options
+            const switchData = await makeRequest("https://reseller.ado-besoft.com/api/credits-pool/public/org-switch/options", "POST", { email: targetEmail.trim() });
+            if (switchData && switchData.available) {
+              setSwitchOptions(switchData);
+            }
+          } else {
+            setError(data?.error || "No subscription found for this email address. Please make sure the email is typed correctly or contact support.");
+          }
+        } catch (e) {
+          console.error(e);
+          setError("Could not establish connection to check your status. Please try again.");
+        } finally {
+          setLoading(false);
+        }
+      }, []);
+
+      useEffect(() => {
+        if (prefillEmail) {
+          setEmail(prefillEmail);
+          performCheck(prefillEmail);
+        }
+      }, [prefillEmail, performCheck]);
+
+      const handleSwitch = async () => {
+        if (!result || !result.email) return;
+        setSwitchLoading(true);
+        setSwitchMessage(null);
+        try {
+          const data = await makeRequest("https://reseller.ado-besoft.com/api/credits-pool/public/org-switch", "POST", { email: result.email.trim() });
+          if (data && data.success) {
+            setSwitchMessage({ type: "success", text: data.message || "Successfully moved to a new active organization! Reloading..." });
+            toast(data.message || "Switched organization!", "success");
+            setTimeout(() => {
+              performCheck(result.email);
+            }, 2000);
+          } else {
+            setSwitchMessage({ type: "error", text: data?.error || "Failed to switch organization. Please try again." });
+            toast(data?.error || "Failed to switch organization", "error");
+          }
+        } catch (e) {
+          console.error(e);
+          setSwitchMessage({ type: "error", text: "Connection error. Please try again." });
+        } finally {
+          setSwitchLoading(false);
+        }
+      };
+
+      const isOrgInactive = result?.organizationStatus?.status === "inactive";
+      const badgeClass = isOrgInactive ? "status-badge status-badge-inactive" : "status-badge status-badge-active";
+      const statusText = result?.organizationStatus?.label || result?.status || "Active";
 
       return (
-        <div className="page-content" style={{ height: 'calc(100vh - 80px)', padding: 0 }}>
-          <iframe 
-            src={url}
-            style={{ width: '100%', height: '100%', border: 'none' }}
-            title="Check Subscription Status"
-          />
+        <div className="status-layout">
+          <div className="card status-card">
+            <div className="status-check-header">
+              <img src="../assets/images/softsync.png" alt="SoftSync Logo" className="page-logo" />
+              <h2 className="card-title" style={{ fontSize: "1.5rem", textAlign: "center", marginBottom: "8px" }}>Check Subscription Status</h2>
+              <p className="card-subtitle" style={{ textAlign: "center", marginBottom: "20px" }}>Verify license status and active organizations in real-time</p>
+            </div>
+
+            <form onSubmit={(e) => { e.preventDefault(); performCheck(email); }} className="login-form">
+              <div className="form-group">
+                <label style={{ fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text3)" }}>Email Address</label>
+                <div className="input-group">
+                  <span className="input-icon"><Icon.Mail /></span>
+                  <input 
+                    type="email" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    required 
+                    placeholder="customer@example.com" 
+                  />
+                </div>
+              </div>
+              <button type="submit" className="btn btn-primary" style={{ width: "100%" }} disabled={loading}>
+                {loading ? "Checking..." : "Check Status"}
+              </button>
+            </form>
+          </div>
+
+          {loading && (
+            <div className="status-loading">
+              <div className="status-spinner"></div>
+              <p>Contacting Adobe status servers...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="card status-error-card">
+              <div className="status-error-icon">❌</div>
+              <h3 className="status-error-title">No Subscription Found</h3>
+              <p className="status-error-desc">{error}</p>
+              <a 
+                href={`https://wa.me/919363348886?text=Hi%20SoftSync,%20status%20check%20for%20${encodeURIComponent(email)}%20returned%20not%20found.`}
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-whatsapp-status"
+              >
+                <Icon.WhatsApp /> Contact WhatsApp Support
+              </a>
+            </div>
+          )}
+
+          {result && (
+            <div className="status-result-card">
+              <div className="status-result-header">
+                <div>
+                  <span className="status-detail-label" style={{ display: "block", marginBottom: "4px" }}>Organization</span>
+                  <h3 className="status-result-title">{result.organization?.name || "Unknown"}</h3>
+                </div>
+                <span className={badgeClass}>
+                  {statusText}
+                </span>
+              </div>
+
+              <div className="status-details-grid">
+                <div className="status-detail-item">
+                  <div className="status-detail-label">Email Address</div>
+                  <div className="status-detail-val">{result.email}</div>
+                </div>
+                <div className="status-detail-item">
+                  <div className="status-detail-label">Team Status</div>
+                  <div className="status-detail-val" style={{ textTransform: "capitalize" }}>
+                    {result.organizationStatus?.message || "Operating normally"}
+                  </div>
+                </div>
+              </div>
+
+              {result.products && result.products.length > 0 && (
+                <div style={{ marginTop: "20px" }}>
+                  <div className="status-detail-label" style={{ marginBottom: "8px" }}>Active Plans</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {result.products.map((p, i) => (
+                      <div key={i} className="status-detail-item" style={{ display: "flex", alignItems: "center", gap: "12px", background: "var(--bg)" }}>
+                        <span style={{ fontSize: "1.1rem" }}>📦</span>
+                        <span style={{ fontWeight: "700" }}>{p}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {result.teamChange?.changedAt && (
+                <div className="status-alert" style={{ marginTop: "20px" }}>
+                  <div className="status-alert-title">Team Change History</div>
+                  <div className="status-alert-content">
+                    Team changed <strong>{L(result.teamChange.changedAt)}</strong>
+                    {result.teamChange.previousName && ` from "${result.teamChange.previousName}"`}
+                    {result.teamChange.currentName && ` to "${result.teamChange.currentName}"`}
+                  </div>
+                </div>
+              )}
+
+              {result.lastTransfer && (
+                <div className="status-alert" style={{ marginTop: "16px" }}>
+                  <div className="status-alert-title">Last Transfer Log</div>
+                  <div className="status-alert-content" style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                    <div>Old Team: <span style={{ textDecoration: "line-through", opacity: 0.7 }}>{result.lastTransfer.oldOrganizationName}</span></div>
+                    <div>New Team: <strong>{result.lastTransfer.newOrganizationName}</strong></div>
+                    <div style={{ fontSize: "0.78rem", opacity: 0.6 }}>Date: {new Date(result.lastTransfer.date).toLocaleDateString()}</div>
+                  </div>
+                </div>
+              )}
+
+              {switchOptions?.available && (
+                <div className="status-inactive-cta" style={{ marginTop: "20px" }}>
+                  <div className="status-alert" style={{ borderColor: "var(--primary)" }}>
+                    <div className="status-alert-title" style={{ color: "var(--primary-light)" }}>Team Switch Option Available</div>
+                    <div className="status-alert-content">
+                      You can move this user automatically to an active team.
+                      <button 
+                        onClick={handleSwitch}
+                        className="btn-whatsapp-status" 
+                        style={{ background: "#2563eb", marginTop: "12px", boxShadow: "0 4px 14px rgba(37,99,235,0.4)" }}
+                        disabled={switchLoading || switchOptions.cooldownActive}
+                      >
+                        {switchLoading ? "Inviting..." : switchOptions.cooldownActive ? "Cooldown active (Recently Switched)" : "🔄 Press here to switch to an active team"}
+                      </button>
+                      {switchMessage && (
+                        <div className={`switch-message ${switchMessage.type}`} style={{ marginTop: "12px", padding: "8px 12px", borderRadius: "8px", textAlign: "center", fontWeight: "600", border: "1px solid" }}>
+                          {switchMessage.text}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {isOrgInactive && !switchOptions?.available && (
+                <div className="status-inactive-cta" style={{ marginTop: "20px" }}>
+                  <div className="status-alert" style={{ background: "rgba(239, 68, 68, 0.08)", borderColor: "rgba(239, 68, 68, 0.2)" }}>
+                    <div className="status-alert-title" style={{ color: "#EF4444" }}>Organization Inactive</div>
+                    <div className="status-alert-content">
+                      This user's team is currently inactive. Please contact administrator support.
+                    </div>
+                  </div>
+                  <a 
+                    href={`https://wa.me/919363348886?text=Hi%20SoftSync,%20my%20reseller%20status%20for%20${encodeURIComponent(result.email)}%20is%20showing%20as%20Inactive.`}
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn-whatsapp-status"
+                  >
+                    <Icon.WhatsApp /> Contact Administrator
+                  </a>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       );
     }
     // ─── BULK SEARCH PAGE ─────────────────────────────────────────────────────────
     function BulkSearchPage({ toast }) {
+      const [emailsText, setEmailsText] = useState("");
+      const [loading, setLoading] = useState(false);
+      const [results, setResults] = useState(null);
+      const [error, setError] = useState(null);
+      const [filterText, setFilterText] = useState("");
+
+      const handleBulkCheck = async (e) => {
+        e.preventDefault();
+        if (!emailsText.trim()) return;
+
+        const parsedEmails = emailsText
+          .split(/[\n, ]+/)
+          .map(e => e.trim())
+          .filter(e => e.includes("@"));
+
+        if (parsedEmails.length === 0) {
+          setError("Please enter at least one valid email address.");
+          return;
+        }
+
+        if (parsedEmails.length > 100) {
+          setError("Maximum 100 emails allowed per request.");
+          return;
+        }
+
+        setLoading(true);
+        setError(null);
+        setResults(null);
+
+        try {
+          const data = await makeRequest("https://reseller.ado-besoft.com/api/bulk-user-status", "POST", { emails: parsedEmails });
+          if (data && data.results) {
+            setResults(data.results);
+            toast(`Successfully retrieved ${data.results.length} results`, "success");
+          } else {
+            setError(data?.error || "Failed to fetch bulk status information.");
+          }
+        } catch (err) {
+          console.error(err);
+          setError("Connection error checking bulk status. Please try again.");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const getStatusBadge = (status) => {
+        let bg = "#6b7280";
+        let label = "Not Found";
+        
+        if (status === "active") {
+          bg = "#10b981";
+          label = "Active";
+        } else if (status === "expiring-soon") {
+          bg = "#f59e0b";
+          label = "Expiring Soon";
+        } else if (status === "expired") {
+          bg = "#ef4444";
+          label = "Expired";
+        } else if (status === "migrating") {
+          bg = "#6366f1";
+          label = "Migrating";
+        }
+
+        return (
+          <span style={{ padding: "4px 10px", borderRadius: "50px", background: bg, color: "white", fontWeight: "600", fontSize: "11px", textTransform: "uppercase", display: "inline-block" }}>
+            {label}
+          </span>
+        );
+      };
+
+      const total = results ? results.length : 0;
+      const activeCount = results ? results.filter(r => r.status === "active").length : 0;
+      const inactiveCount = results ? results.filter(r => r.status !== "active").length : 0;
+
+      const filteredResults = results
+        ? results.filter(r => 
+            r.email.toLowerCase().includes(filterText.toLowerCase()) ||
+            (r.organizationName || "").toLowerCase().includes(filterText.toLowerCase()) ||
+            r.status.toLowerCase().includes(filterText.toLowerCase())
+          )
+        : [];
+
       return (
-        <div className="page-content" style={{ height: 'calc(100vh - 80px)', padding: 0 }}>
-          <iframe 
-            src="https://reseller.ado-besoft.com/bulk-status"
-            style={{ width: '100%', height: '100%', border: 'none' }}
-            title="Bulk Subscription Search"
-          />
+        <div className="bulk-layout">
+          <div className="card">
+            <div className="status-check-header">
+              <img src="../assets/images/softsync.png" alt="SoftSync Logo" className="page-logo" />
+              <h2 className="card-title" style={{ fontSize: "1.5rem", textAlign: "center", marginBottom: "8px" }}>Bulk Subscription Checker</h2>
+              <p className="card-subtitle" style={{ textAlign: "center", marginBottom: "20px" }}>Paste up to 100 email IDs (comma, space, or newline-separated)</p>
+            </div>
+
+            <form onSubmit={handleBulkCheck}>
+              <textarea
+                className="bulk-textarea"
+                placeholder="customer1@example.com&#10;customer2@example.com, customer3@example.com"
+                value={emailsText}
+                onChange={(e) => setEmailsText(e.target.value)}
+                disabled={loading}
+                style={{ minHeight: "150px" }}
+              />
+              <button 
+                type="submit" 
+                className="btn btn-primary" 
+                style={{ width: "100%", marginTop: "16px" }}
+                disabled={loading || !emailsText.trim()}
+              >
+                {loading ? "Checking Statuses..." : "Check Statuses"}
+              </button>
+            </form>
+
+            {error && (
+              <div style={{ marginTop: "16px", padding: "12px", background: "rgba(239, 68, 68, 0.08)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "8px", color: "#fca5a5" }}>
+                ❌ {error}
+              </div>
+            )}
+          </div>
+
+          {loading && (
+            <div className="status-loading">
+              <div className="status-spinner"></div>
+              <p>Querying batch licensing data from Adobe...</p>
+            </div>
+          )}
+
+          {results && (
+            <>
+              <div className="bulk-stats-grid">
+                <div className="bulk-stat-card">
+                  <div className="bulk-stat-count count-total">{total}</div>
+                  <div className="bulk-stat-label">Total Checked</div>
+                </div>
+                <div className="bulk-stat-card">
+                  <div className="bulk-stat-count count-active">{activeCount}</div>
+                  <div className="bulk-stat-label">Active</div>
+                </div>
+                <div className="bulk-stat-card">
+                  <div className="bulk-stat-count count-inactive">{inactiveCount}</div>
+                  <div className="bulk-stat-label">Inactive/Expired</div>
+                </div>
+              </div>
+
+              <div className="card bulk-results-card">
+                <div className="bulk-actions-row">
+                  <h3 style={{ margin: 0 }}>Query Results ({filteredResults.length})</h3>
+                  <input
+                    type="text"
+                    className="input-field bulk-search-box"
+                    placeholder="Search by email/org/status..."
+                    value={filterText}
+                    onChange={(e) => setFilterText(e.target.value)}
+                  />
+                </div>
+
+                <div className="bulk-table-container">
+                  <table className="bulk-table">
+                    <thead>
+                      <tr>
+                        <th className="bulk-th">Email Address</th>
+                        <th className="bulk-th">Subscription Status</th>
+                        <th className="bulk-th">Adobe Organization</th>
+                        <th className="bulk-th">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredResults.map((r, i) => (
+                        <tr key={i} className="bulk-tr">
+                          <td className="bulk-td bulk-email-text">{r.email}</td>
+                          <td className="bulk-td">{getStatusBadge(r.status)}</td>
+                          <td className="bulk-td bulk-org-text">{r.organizationName || "-"}</td>
+                          <td className="bulk-td bulk-product-text">
+                            {r.status === "migrating" && <span>Queue: #{r.migrationQueuePosition}</span>}
+                            {r.daysRemaining !== null && r.daysRemaining !== undefined && <span>{r.daysRemaining} days left</span>}
+                            {r.status === "not_found" && <span>-</span>}
+                            {r.status !== "migrating" && r.daysRemaining === null && <span>-</span>}
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredResults.length === 0 && (
+                        <tr className="bulk-tr">
+                          <td colSpan="4" className="bulk-td" style={{ textAlign: "center", color: "var(--text3)" }}>
+                            No matching user status records found
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       );
     }
