@@ -1255,6 +1255,13 @@ footer {
     .plans-grid { grid-template-columns: 1fr; }
     .contact-methods { grid-template-columns: 1fr; }
 
+    /* Disable scroll animations on mobile for guaranteed visibility */
+    .animate-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
     /* Promo Mascot Coordinates refinement */
     .banner-mascot-wrapper {
         right: 20px;
