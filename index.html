@@ -505,5 +505,26 @@
             </button>
         </div>
     </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="payment-modal" style="display: none; align-items: center; justify-content: center; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; backdrop-filter: blur(10px);">
+        <div class="modal-card" style="background: var(--surface); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); max-width: 400px; width: 90%; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+            <button class="modal-close" onclick="closePaymentModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text2); font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-icon" style="font-size: 3rem; margin-bottom: 15px; color: #10B981;"><i class="fa-solid fa-qrcode"></i></div>
+            <h3 class="modal-title" style="margin-bottom: 10px; font-size: 1.5rem;">Secure UPI Payment</h3>
+            <p class="modal-desc" style="color: var(--text2); line-height: 1.5; margin-bottom: 20px;">Scan the QR Code with Google Pay, PhonePe, or Paytm to pay <strong id="payment-amount" style="color: var(--color-text); font-size: 1.2rem;">₹0</strong></p>
+            
+            <div style="background: white; padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <img id="payment-qr" src="" alt="UPI QR Code" style="width: 200px; height: 200px; object-fit: contain;">
+            </div>
+
+            <p style="font-size: 13px; color: var(--text2); margin-bottom: 15px;">UPI ID: <strong id="payment-upi-id" style="user-select: all; cursor: pointer; color: var(--color-primary-light);">softsync@upi</strong></p>
+
+            <button class="btn btn-primary" id="confirm-payment-btn" style="width: 100%; background: #10B981; border: none; margin-bottom: 10px;" onclick="confirmPayment()">
+                <i class="fa-brands fa-whatsapp" style="margin-right: 8px;"></i> I've Paid - Send Screenshot
+            </button>
+            <p style="font-size: 11px; color: var(--text-light); opacity: 0.7;">After paying, click the button above to send your payment screenshot on WhatsApp to instantly activate your plan.</p>
+        </div>
+    </div>
 </body>
 </html>

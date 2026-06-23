@@ -417,6 +417,43 @@ function closeInstaModal() {
     pendingDiscountPlan = null;
 }
 
+const UPI_ID = 'dhineshtn0-2@okaxis';
+let currentPaymentPlan = null;
+
+function showPaymentModal(planName, price) {
+    currentPaymentPlan = planName;
+    const modal = document.getElementById('payment-modal');
+    const amountEl = document.getElementById('payment-amount');
+    const qrEl = document.getElementById('payment-qr');
+    const upiIdEl = document.getElementById('payment-upi-id');
+
+    if (modal && amountEl && qrEl && upiIdEl) {
+        amountEl.textContent = formatPrice(price);
+        upiIdEl.textContent = UPI_ID;
+        
+        // Use the user's provided static GPay QR code
+        qrEl.src = `assets/images/QR GPAY.jpeg`;
+
+        modal.classList.add('show');
+    }
+}
+
+function closePaymentModal() {
+    const modal = document.getElementById('payment-modal');
+    if (modal) modal.classList.remove('show');
+    currentPaymentPlan = null;
+}
+
+function confirmPayment() {
+    if (!currentPaymentPlan) return;
+    const plan = findPlan(currentPaymentPlan);
+    const priceText = plan ? formatPrice(plan.price) : '';
+    const message = `Hi SoftSync! I just paid ${priceText} for the ${currentPaymentPlan} plan via UPI. Here is my screenshot:`;
+    
+    closePaymentModal();
+    openWhatsApp(message);
+}
+
 function claimInstaDiscount() {
     openInstagram();
     const modal = document.getElementById('insta-modal');
@@ -425,14 +462,16 @@ function claimInstaDiscount() {
     if (pendingDiscountPlan) {
         setTimeout(async () => {
             const plan = findPlan(pendingDiscountPlan);
-            const priceText = plan ? formatPrice(plan.price) : '';
-            const message = `Hi SoftSync! I followed your Instagram and want to claim the special discount price of ${priceText} for the ${pendingDiscountPlan} plan. How can I proceed with the payment?`;
             
             if (typeof setMascotState === 'function') {
                 setMascotState('happy', `Discount applied! Setting up your ${pendingDiscountPlan} order...`);
             }
             await saveOrderIntent(plan, 'buy_now_discount');
-            openWhatsApp(message);
+            
+            // Show payment modal
+            if (plan) {
+                showPaymentModal(plan.name, plan.price);
+            }
             pendingDiscountPlan = null;
         }, 1500);
     }
@@ -448,15 +487,17 @@ async function buyNow(planType) {
     }
 
     const plan = findPlan(planType);
-    const priceText = plan ? formatPrice(plan.price) : '';
-    const message = `Hi SoftSync! I want to buy the ${planType} plan (${priceText}). How can I proceed with the payment?`;
+    if (!plan) return;
 
     if (typeof setMascotState === 'function') {
         setMascotState('happy', `Great choice! Setting up your ${planType} order...`);
     }
 
     await saveOrderIntent(plan, 'buy_now');
-    setTimeout(() => { openWhatsApp(message); }, 800);
+    
+    setTimeout(() => { 
+        showPaymentModal(plan.name, plan.price); 
+    }, 800);
 }
 
 // Flash Timer Logic
@@ -973,6 +1014,10 @@ function setupFeedbackForm() {
                     if (typeof setMascotState === 'function') {
                         setMascotState('happy', 'Woohoo! Enjoy your Canva Pro!');
                     }
+                    
+                    // Send WhatsApp message with feedback details
+                    const waMessage = `*New Canva Pro Feedback!* 🎁\n\n*Email:* ${feedbackData.email}\n*Phone:* ${feedbackData.phone}\n*Rating:* ${feedbackData.rating} Stars ${'⭐'.repeat(feedbackData.rating)}\n*Message:* ${feedbackData.comments || 'No comments'}`;
+                    openWhatsApp(waMessage);
                 }, 400);
             }
         } else {
