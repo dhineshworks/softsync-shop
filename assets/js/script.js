@@ -505,19 +505,24 @@ async function loadPlans() {
         return;
     }
 
-    const { data, error } = await client
-        .from('plans')
-        .select('name, slug, badge, description, price, price_subtitle, image_url, image_alt, features, accent_color, featured, sort_order, is_active')
-        .eq('is_active', true)
-        .order('sort_order', { ascending: true });
+    try {
+        const { data, error } = await client
+            .from('plans')
+            .select('name, slug, badge, description, price, price_subtitle, image_url, image_alt, features, accent_color, featured, sort_order, is_active')
+            .eq('is_active', true)
+            .order('sort_order', { ascending: true });
 
-    if (error) {
-        console.warn('Supabase plan load failed. Showing fallback plans.', error);
+        if (error) {
+            console.warn('Supabase plan load failed. Showing fallback plans.', error);
+            renderPlans(FALLBACK_PLANS);
+            return;
+        }
+
+        renderPlans(data || FALLBACK_PLANS);
+    } catch (err) {
+        console.warn('Exception during plan load.', err);
         renderPlans(FALLBACK_PLANS);
-        return;
     }
-
-    renderPlans(data || FALLBACK_PLANS);
 }
 
 async function saveOrderIntent(plan, source) {
@@ -954,21 +959,24 @@ function setupMascot() {
 function addScrollAnimations() {
     const animated = document.querySelectorAll('.animate-on-scroll');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-            }
+    if (!window.IntersectionObserver) {
+        animated.forEach(el => el.classList.add('in-view'));
+    } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, {
+            threshold: 0.12
         });
-    }, {
-        threshold: 0.12
-    });
 
-    animated.forEach((el) => {
-        el.classList.remove('in-view');
-        observer.observe(el);
-    });
-
+        animated.forEach((el) => {
+            el.classList.remove('in-view');
+            observer.observe(el);
+        });
+    }
     const header = document.querySelector('header');
     if (header) {
         const onScroll = () => {
