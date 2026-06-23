@@ -383,15 +383,16 @@ const FALLBACK_PLANS = [
         badge: 'Creative Assets',
         description: 'Unlimited Downloads of Premium Digital Assets',
         price: 0,
-        price_subtitle: 'DM for Pricing & Plans',
-        image_url: 'assets/images/envato.png',
+        price_subtitle: 'Multiple Plans Available',
+        image_url: 'assets/images/Envato-Elements-logo-emblem-transparent-png.png',
         image_alt: 'Envato Elements',
         features: [
-            'Millions of creative assets',
-            'Graphics, video, audio & more',
-            'WordPress themes & plugins',
-            'Commercial license included',
-            'Private access'
+            '1 Month Access: ₹200',
+            '3 Months Access: ₹500',
+            '6 Months Access: ₹800',
+            '1 Year Access: ₹1250',
+            'Unlimited Downloads',
+            'Private & secure access'
         ],
         accent_color: '#81B441',
         featured: false,
