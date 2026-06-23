@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftSync - Checkout</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <nav class="global-nav">
+        <div class="global-nav-container">
+            <a href="index.html" class="global-nav-link"><i class="fa-solid fa-store"></i> <span data-translate="nav_shop">Shop Home</span></a>
+            <a href="status.html" class="global-nav-link"><i class="fa-solid fa-shield"></i> <span data-translate="nav_status">Check Status</span></a>
+            <a href="admin/index.html" class="global-nav-link"><i class="fa-solid fa-lock"></i> <span data-translate="nav_admin">Admin Panel</span></a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="assets/images/softsync.png" alt="SoftSync" class="logo-image">
+                <span class="logo-text">SoftSync</span>
+            </div>
+            <div class="social-links">
+                <button id="lang-toggle" class="social-btn lang-btn" aria-label="Switch Language">
+                    <i class="fa-solid fa-language"></i> <span id="lang-toggle-text">தமிழ்</span>
+                </button>
+                <button id="theme-toggle" class="social-btn" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="checkout-section">
+        <div class="checkout-container">
+            <!-- Left Column: Plan Details -->
+            <div class="checkout-left">
+                <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Shop</a>
+                
+                <div class="checkout-plan-header">
+                    <div class="checkout-plan-image-wrapper">
+                        <img id="checkout-plan-image" src="" alt="Plan Image">
+                    </div>
+                    <div class="checkout-plan-info">
+                        <h1 id="checkout-plan-name">Loading...</h1>
+                        <p id="checkout-plan-desc" class="checkout-desc">Please wait while we load your plan details.</p>
+                        <div id="checkout-plan-price" class="checkout-price">₹0</div>
+                    </div>
+                </div>
+
+                <div class="checkout-features card-glass">
+                    <h3><i class="fa-solid fa-star" style="color: #FBBF24;"></i> Plan Features</h3>
+                    <div id="checkout-features-list" class="features-list-grid">
+                        <!-- Features injected by JS -->
+                    </div>
+                </div>
+
+                <div class="checkout-activation card-glass">
+                    <h3><i class="fa-solid fa-bolt" style="color: #38BDF8;"></i> Activation Process</h3>
+                    <ul class="activation-steps">
+                        <li>
+                            <div class="step-icon">1</div>
+                            <div class="step-text">Choose your preferred payment or activation option on the right.</div>
+                        </li>
+                        <li>
+                            <div class="step-icon">2</div>
+                            <div class="step-text">Send us a message on WhatsApp or Email with your details.</div>
+                        </li>
+                        <li>
+                            <div class="step-icon">3</div>
+                            <div class="step-text">We will activate your license within <strong style="color: #10B981;">5-10 minutes</strong>.</div>
+                        </li>
+                        <li>
+                            <div class="step-icon">4</div>
+                            <div class="step-text">If you requested activation first, you can pay <em style="color: var(--color-primary-light);">after</em> the setup is complete!</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column: Payment & Action -->
+            <div class="checkout-right">
+                <div class="payment-card card-glass">
+                    <div class="payment-header">
+                        <i class="fa-solid fa-qrcode payment-icon"></i>
+                        <h2>Secure Payment</h2>
+                        <p>Scan with Google Pay, PhonePe, or Paytm</p>
+                    </div>
+
+                    <div class="qr-wrapper">
+                        <img id="checkout-qr" src="assets/images/QR GPAY.jpeg" alt="UPI QR Code">
+                    </div>
+                    
+                    <p class="upi-id-text">UPI ID: <strong id="checkout-upi-id">dhineshtn0-2@okaxis</strong></p>
+
+                    <div class="payment-actions">
+                        <div class="action-divider"><span>Option 1: Pay Now</span></div>
+                        <button id="btn-pay-now" class="btn btn-primary w-100 mb-3 pulse-btn" style="background: #10B981; border: none;">
+                            <i class="fa-brands fa-whatsapp"></i> I've Paid - Send Screenshot
+                        </button>
+                        
+                        <div class="action-divider"><span>Option 2: Pay Later</span></div>
+                        <button id="btn-activate-first" class="btn btn-secondary w-100 mb-2" style="border-color: var(--color-primary-light); color: var(--color-text);">
+                            <i class="fa-solid fa-rocket" style="color: var(--color-primary-light);"></i> Activate First, Pay Later
+                        </button>
+                        <button id="btn-email-activation" class="btn btn-secondary w-100" style="background: transparent;">
+                            <i class="fa-solid fa-envelope"></i> Request via Email
+                        </button>
+                    </div>
+                    
+                    <p class="security-note"><i class="fa-solid fa-lock"></i> 100% Secure & Official License</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p style="margin-bottom: 20px;" data-translate="footer_rights">© 2024 SoftSync. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;" data-translate="footer_disclaimer">SoftSync is an authorized reseller of Adobe
+                Creative Cloud licenses.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initializeCheckoutPage === 'function') {
+                // Short delay to ensure script.js finishes its setup if needed
+                setTimeout(initializeCheckoutPage, 100);
+            }
+        });
+    </script>
+</body>
+</html>

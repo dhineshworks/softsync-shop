@@ -418,41 +418,6 @@ function closeInstaModal() {
 }
 
 const UPI_ID = 'dhineshtn0-2@okaxis';
-let currentPaymentPlan = null;
-
-function showPaymentModal(planName, price) {
-    currentPaymentPlan = planName;
-    const modal = document.getElementById('payment-modal');
-    const amountEl = document.getElementById('payment-amount');
-    const qrEl = document.getElementById('payment-qr');
-    const upiIdEl = document.getElementById('payment-upi-id');
-
-    if (modal && amountEl && qrEl && upiIdEl) {
-        amountEl.textContent = formatPrice(price);
-        upiIdEl.textContent = UPI_ID;
-        
-        // Use the user's provided static GPay QR code
-        qrEl.src = `assets/images/QR GPAY.jpeg`;
-
-        modal.classList.add('show');
-    }
-}
-
-function closePaymentModal() {
-    const modal = document.getElementById('payment-modal');
-    if (modal) modal.classList.remove('show');
-    currentPaymentPlan = null;
-}
-
-function confirmPayment() {
-    if (!currentPaymentPlan) return;
-    const plan = findPlan(currentPaymentPlan);
-    const priceText = plan ? formatPrice(plan.price) : '';
-    const message = `Hi SoftSync! I just paid ${priceText} for the ${currentPaymentPlan} plan via UPI. Here is my screenshot:`;
-    
-    closePaymentModal();
-    openWhatsApp(message);
-}
 
 function claimInstaDiscount() {
     openInstagram();
@@ -468,9 +433,8 @@ function claimInstaDiscount() {
             }
             await saveOrderIntent(plan, 'buy_now_discount');
             
-            // Show payment modal
             if (plan) {
-                showPaymentModal(plan.name, plan.price);
+                window.location.href = `checkout.html?plan=${encodeURIComponent(plan.slug || plan.name)}`;
             }
             pendingDiscountPlan = null;
         }, 1500);
@@ -496,8 +460,84 @@ async function buyNow(planType) {
     await saveOrderIntent(plan, 'buy_now');
     
     setTimeout(() => { 
-        showPaymentModal(plan.name, plan.price); 
+        window.location.href = `checkout.html?plan=${encodeURIComponent(plan.slug || plan.name)}`;
     }, 800);
+}
+
+function initializeCheckoutPage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const planParam = urlParams.get('plan');
+    if (!planParam) return;
+
+    const plan = findPlan(planParam);
+    
+    if (!plan) {
+        // Retry once after a short delay in case async loadPlans hasn't finished
+        setTimeout(() => {
+            const retryPlan = findPlan(planParam);
+            if (retryPlan) renderCheckout(retryPlan);
+            else {
+                const nameEl = document.getElementById('checkout-plan-name');
+                if (nameEl) nameEl.textContent = "Plan not found.";
+            }
+        }, 500);
+        return;
+    }
+
+    renderCheckout(plan);
+}
+
+function renderCheckout(plan) {
+    const nameEl = document.getElementById('checkout-plan-name');
+    if (!nameEl) return; // Not on checkout page
+
+    nameEl.textContent = plan.name;
+    document.getElementById('checkout-plan-desc').textContent = plan.description;
+    document.getElementById('checkout-plan-price').innerHTML = plan.price_subtitle && plan.price_subtitle.includes('<del') ? `${formatPrice(plan.price)} <span style="font-size:16px; opacity:0.6; font-weight:normal;">${plan.price_subtitle}</span>` : formatPrice(plan.price);
+    
+    const imgEl = document.getElementById('checkout-plan-image');
+    if (imgEl) {
+        imgEl.src = plan.image_url;
+        imgEl.alt = plan.image_alt || plan.name;
+    }
+
+    const featuresList = document.getElementById('checkout-features-list');
+    if (featuresList && plan.features) {
+        featuresList.innerHTML = plan.features.map(f => `
+            <div class="feature">
+                <i class="fa-solid fa-circle-check" style="color: #10B981;"></i>
+                <span>${getTranslatedPlanText(f, currentLang)}</span>
+            </div>
+        `).join('');
+    }
+
+    // Bind Payment Action Buttons
+    const priceText = formatPrice(plan.price);
+    
+    const btnPayNow = document.getElementById('btn-pay-now');
+    if (btnPayNow) {
+        btnPayNow.onclick = () => {
+            const msg = `Hi SoftSync! I just paid ${priceText} for the ${plan.name} plan via UPI. Here is my screenshot:`;
+            openWhatsApp(msg);
+        };
+    }
+
+    const btnActivateFirst = document.getElementById('btn-activate-first');
+    if (btnActivateFirst) {
+        btnActivateFirst.onclick = () => {
+            const msg = `Hi SoftSync! I want to buy the ${plan.name} plan (${priceText}). Please activate it for me first, and I will pay within 5-10 minutes of activation.`;
+            openWhatsApp(msg);
+        };
+    }
+
+    const btnEmailActivation = document.getElementById('btn-email-activation');
+    if (btnEmailActivation) {
+        btnEmailActivation.onclick = () => {
+            const subject = encodeURIComponent(`Activation Request: ${plan.name} Plan`);
+            const body = encodeURIComponent(`Hi SoftSync Team,\n\nI want to buy the ${plan.name} plan (${priceText}). Please activate my license first. I will make the payment within 5-10 minutes after activation is complete.\n\nThank you!`);
+            window.open(`mailto:${CONTACT_CONFIG.EMAIL}?subject=${subject}&body=${body}`, '_blank');
+        };
+    }
 }
 
 // Flash Timer Logic
