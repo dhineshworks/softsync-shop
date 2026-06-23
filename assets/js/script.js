@@ -180,7 +180,7 @@ const FALLBACK_PLANS = [
         description: 'Perfect for individual creators',
         price: 3000,
         price_subtitle: '1 Year Full Access',
-        image_url: 'assets/images/adobe standard.png',
+        image_url: 'assets/images/adobe standard.webp',
         image_alt: 'Adobe Standard plan',
         features: [
             'Photoshop & Lightroom 20+ Apps',
@@ -201,7 +201,7 @@ const FALLBACK_PLANS = [
         description: 'For professional teams',
         price: 2699,
         price_subtitle: '<del style="opacity: 0.6; margin-right: 4px;">₹3,350</del> 1 Year Full Access',
-        image_url: 'assets/images/adobe pro plus.png',
+        image_url: 'assets/images/adobe pro plus.webp',
         image_alt: 'Adobe Pro Plus plan',
         features: [
             'All Standard Features',
@@ -222,7 +222,7 @@ const FALLBACK_PLANS = [
         description: 'Design like a pro',
         price: 199,
         price_subtitle: '1 Year Full Access',
-        image_url: 'assets/images/pngwing.com.png',
+        image_url: 'assets/images/pngwing.com.webp',
         image_alt: 'Canva Pro',
         features: [
             '100+ Million Premium Assets',
@@ -243,7 +243,7 @@ const FALLBACK_PLANS = [
         description: 'All-in-one Video Editor + AI Credits',
         price: 0,
         price_subtitle: 'Multiple Plans Available',
-        image_url: 'assets/images/flimora.png',
+        image_url: 'assets/images/flimora.webp',
         image_alt: 'Wondershare Filmora 15',
         features: [
             'Filmora 15 Licence Only',
@@ -282,7 +282,7 @@ const FALLBACK_PLANS = [
         description: 'Professional Video Editing Software',
         price: 0,
         price_subtitle: 'Lifetime Access',
-        image_url: 'assets/images/edius 9.jpeg',
+        image_url: 'assets/images/edius 9.webp',
         image_alt: 'Edius Pro 9',
         features: [
             'Fastest Editing Software',
@@ -301,7 +301,7 @@ const FALLBACK_PLANS = [
         description: 'The Next Generation of Video Editing',
         price: 0,
         price_subtitle: 'Lifetime Access',
-        image_url: 'assets/images/edius 10.png',
+        image_url: 'assets/images/edius 10.webp',
         image_alt: 'Edius X',
         features: [
             'Background Rendering',
@@ -363,7 +363,7 @@ const FALLBACK_PLANS = [
         description: 'Affordable Pricing for Claude AI',
         price: 1700,
         price_subtitle: 'Claude Pro - 20 Days',
-        image_url: 'assets/images/claude.png',
+        image_url: 'assets/images/claude.webp',
         image_alt: 'Claude AI',
         features: [
             'Claude Pro 20 Days: ₹1700',
@@ -384,7 +384,7 @@ const FALLBACK_PLANS = [
         description: 'Unlimited Downloads of Premium Digital Assets',
         price: 0,
         price_subtitle: 'Multiple Plans Available',
-        image_url: 'assets/images/Envato-Elements-logo-emblem-transparent-png.png',
+        image_url: 'assets/images/Envato-Elements-logo-emblem-transparent-png.webp',
         image_alt: 'Envato Elements',
         features: [
             '1 Month Access: ₹200',
@@ -864,19 +864,19 @@ function setMascotState(state, message) {
     bubble.classList.remove('state-happy', 'state-error', 'state-thinking');
 
     if (state === 'happy') {
-        mascotImg.src = 'assets/images/mascot_happy.png';
+        mascotImg.src = 'assets/images/mascot_happy.webp';
         mascotImg.classList.add('mascot-happy');
         bubble.classList.add('state-happy');
     } else if (state === 'error') {
-        mascotImg.src = 'assets/images/mascot_error.png';
+        mascotImg.src = 'assets/images/mascot_error.webp';
         mascotImg.classList.add('mascot-error');
         bubble.classList.add('state-error');
     } else if (state === 'thinking') {
-        mascotImg.src = 'assets/images/mascot_thinking.png';
+        mascotImg.src = 'assets/images/mascot_thinking.webp';
         mascotImg.classList.add('mascot-thinking');
         bubble.classList.add('state-thinking');
     } else {
-        mascotImg.src = 'assets/images/mascot_neutral.png';
+        mascotImg.src = 'assets/images/mascot_neutral.webp';
     }
 
     if (message) {
