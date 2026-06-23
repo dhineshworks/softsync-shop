@@ -235,6 +235,167 @@ const FALLBACK_PLANS = [
         accent_color: '#7C3AED',
         featured: false,
         sort_order: 3
+    },
+    {
+        name: 'Wondershare Filmora 15',
+        slug: 'filmora-15',
+        badge: 'Video Editing',
+        description: 'All-in-one Video Editor + AI Credits',
+        price: 0,
+        price_subtitle: 'Multiple Plans Available',
+        image_url: 'assets/images/flimora.png',
+        image_alt: 'Wondershare Filmora 15',
+        features: [
+            'Filmora 15 Licence Only',
+            'Filmora 15 + Creative Assist',
+            'AI Credits Top-up (Add on)',
+            'Creative Assist/Filmstock Dink Diamond',
+            'Filmora 15 For Android & iPhone'
+        ],
+        accent_color: '#00C2A8',
+        featured: false,
+        sort_order: 4
+    },
+    {
+        name: 'Netflix Premium',
+        slug: 'netflix-premium',
+        badge: 'Trending',
+        description: '4K Ultra HD & Multiple Devices',
+        price: 0,
+        price_subtitle: 'DM for Available Plans',
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg',
+        image_alt: 'Netflix',
+        features: [
+            '4K Ultra HD Quality',
+            'Multiple Device Login',
+            'Ad-Free Experience',
+            'Private Profile',
+            'Instant Activation'
+        ],
+        accent_color: '#E50914',
+        featured: false,
+        sort_order: 5
+    },
+    {
+        name: 'Edius Pro 9',
+        slug: 'edius-9',
+        description: 'Professional Video Editing Software',
+        price: 0,
+        price_subtitle: 'Lifetime Access',
+        image_url: 'assets/images/edius 9.jpeg',
+        image_alt: 'Edius Pro 9',
+        features: [
+            'Fastest Editing Software',
+            '4K & HDR Support',
+            'No Subscription Required',
+            'Professional Color Correction'
+        ],
+        accent_color: null,
+        featured: false,
+        sort_order: 6
+    },
+    {
+        name: 'Edius X (10)',
+        slug: 'edius-10',
+        badge: 'Latest Version',
+        description: 'The Next Generation of Video Editing',
+        price: 0,
+        price_subtitle: 'Lifetime Access',
+        image_url: 'assets/images/edius 10.png',
+        image_alt: 'Edius X',
+        features: [
+            'Background Rendering',
+            'Motion Tracking',
+            '8K Support',
+            'Advanced Audio Sync'
+        ],
+        accent_color: null,
+        featured: false,
+        sort_order: 7
+    },
+    {
+        name: 'Gemini AI Pro + 5TB Storage',
+        slug: 'gemini-pro',
+        badge: '1.5 Year 🔥',
+        description: 'Original licence | Official Purchased',
+        price: 650,
+        price_subtitle: '1.5 Year Validity',
+        image_url: 'https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg',
+        image_alt: 'Gemini AI Pro',
+        features: [
+            'Activation on Personal New Mail ID',
+            'Gemini 2.5 Pro – Smartest AI',
+            '1000 AI Credits Monthly',
+            'Veo 3 – AI Video Generator (50/Month)',
+            'Flow – Cinematic AI Filmmaker',
+            'NotebookLM – Research Assistant',
+            '5TB Google Storage'
+        ],
+        accent_color: '#1A73E8',
+        featured: false,
+        sort_order: 8
+    },
+    {
+        name: 'Higgsfield Plus & Ultra',
+        slug: 'higgsfield',
+        badge: 'In Stock ✅',
+        description: 'AI Video Generation Credits',
+        price: 0,
+        price_subtitle: 'Limited Stock Available',
+        image_url: 'assets/images/image.webp',
+        image_alt: 'Higgsfield',
+        features: [
+            'Higgsfield Plus – 1,000 Credits',
+            'Higgsfield Plus – 3,000 Credits',
+            'Higgsfield Ultra – 9,000 Credits',
+            '3 Days Replacement Warranty',
+            'Direct Activation',
+            'Fast & Secure Delivery'
+        ],
+        accent_color: '#8B5CF6',
+        featured: false,
+        sort_order: 9
+    },
+    {
+        name: 'Claude Pro & Enterprise',
+        slug: 'claude-pro',
+        badge: 'Popular 🔥',
+        description: 'Affordable Pricing for Claude AI',
+        price: 1700,
+        price_subtitle: 'Claude Pro - 20 Days',
+        image_url: 'assets/images/claude.png',
+        image_alt: 'Claude AI',
+        features: [
+            'Claude Pro 20 Days: ₹1700',
+            'Team Plan: Official Price ($25/mo)',
+            'Enterprise Plans Available',
+            'Private access on your own email',
+            'No shared access',
+            'Smooth and secure access'
+        ],
+        accent_color: '#D97757',
+        featured: true,
+        sort_order: 10
+    },
+    {
+        name: 'Envato Elements',
+        slug: 'envato-elements',
+        badge: 'Creative Assets',
+        description: 'Unlimited Downloads of Premium Digital Assets',
+        price: 0,
+        price_subtitle: 'DM for Pricing & Plans',
+        image_url: 'assets/images/envato.png',
+        image_alt: 'Envato Elements',
+        features: [
+            'Millions of creative assets',
+            'Graphics, video, audio & more',
+            'WordPress themes & plugins',
+            'Commercial license included',
+            'Private access'
+        ],
+        accent_color: '#81B441',
+        featured: false,
+        sort_order: 11
     }
 ];
 
@@ -256,6 +417,7 @@ function getSupabaseClient() {
 }
 
 function formatPrice(price) {
+    if (price === 0 || !price) return 'DM for Price';
     return new Intl.NumberFormat('en-IN', {
         style: 'currency',
         currency: 'INR',
@@ -514,18 +676,38 @@ function renderCheckout(plan) {
     // Bind Payment Action Buttons
     const priceText = formatPrice(plan.price);
     
+    const qrWrapper = document.querySelector('.qr-wrapper');
+    const upiIdText = document.querySelector('.upi-id-text');
     const btnPayNow = document.getElementById('btn-pay-now');
-    if (btnPayNow) {
-        btnPayNow.onclick = () => {
-            const msg = `Hi SoftSync! I just paid ${priceText} for the ${plan.name} plan via UPI. Here is my screenshot:`;
-            openWhatsApp(msg);
-        };
+    
+    if (plan.price === 0 || !plan.price) {
+        if (qrWrapper) qrWrapper.style.display = 'none';
+        if (upiIdText) upiIdText.style.display = 'none';
+        if (btnPayNow) {
+            btnPayNow.innerHTML = `<i class="fa-brands fa-whatsapp"></i> DM on WhatsApp for Price`;
+            btnPayNow.onclick = () => {
+                const msg = `Hi SoftSync! I am interested in the ${plan.name} plan. Could you please share the pricing and details?`;
+                openWhatsApp(msg);
+            };
+        }
+    } else {
+        if (qrWrapper) qrWrapper.style.display = 'inline-block';
+        if (upiIdText) upiIdText.style.display = 'block';
+        if (btnPayNow) {
+            btnPayNow.innerHTML = `<i class="fa-brands fa-whatsapp"></i> I've Paid - Send Screenshot`;
+            btnPayNow.onclick = () => {
+                const msg = `Hi SoftSync! I just paid ${priceText} for the ${plan.name} plan via UPI. Here is my screenshot:`;
+                openWhatsApp(msg);
+            };
+        }
     }
 
     const btnActivateFirst = document.getElementById('btn-activate-first');
     if (btnActivateFirst) {
         btnActivateFirst.onclick = () => {
-            const msg = `Hi SoftSync! I want to buy the ${plan.name} plan (${priceText}). Please activate it for me first, and I will pay within 5-10 minutes of activation.`;
+            const msg = plan.price === 0 || !plan.price
+                ? `Hi SoftSync! I am interested in the ${plan.name} plan. Could you let me know the price and activation process?`
+                : `Hi SoftSync! I want to buy the ${plan.name} plan (${priceText}). Please activate it for me first, and I will pay within 5-10 minutes of activation.`;
             openWhatsApp(msg);
         };
     }
@@ -533,8 +715,10 @@ function renderCheckout(plan) {
     const btnEmailActivation = document.getElementById('btn-email-activation');
     if (btnEmailActivation) {
         btnEmailActivation.onclick = () => {
-            const subject = encodeURIComponent(`Activation Request: ${plan.name} Plan`);
-            const body = encodeURIComponent(`Hi SoftSync Team,\n\nI want to buy the ${plan.name} plan (${priceText}). Please activate my license first. I will make the payment within 5-10 minutes after activation is complete.\n\nThank you!`);
+            const subject = encodeURIComponent(`Inquiry: ${plan.name} Plan`);
+            const body = plan.price === 0 || !plan.price
+                ? encodeURIComponent(`Hi SoftSync Team,\n\nI am interested in the ${plan.name} plan. Could you please let me know the pricing and how to proceed with activation?\n\nThank you!`)
+                : encodeURIComponent(`Hi SoftSync Team,\n\nI want to buy the ${plan.name} plan (${priceText}). Please activate my license first. I will make the payment within 5-10 minutes after activation is complete.\n\nThank you!`);
             window.open(`mailto:${CONTACT_CONFIG.EMAIL}?subject=${subject}&body=${body}`, '_blank');
         };
     }

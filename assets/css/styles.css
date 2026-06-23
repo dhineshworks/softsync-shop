@@ -739,6 +739,15 @@ header.scrolled {
     transform: scale(1.1) translateY(-5px);
 }
 
+/* Make Claude logo a little bigger to fit like Adobe */
+.plan-image img[alt="Claude AI"] {
+    transform: scale(1.8);
+}
+
+.plan-card:hover .plan-image img[alt="Claude AI"] {
+    transform: scale(1.9) translateY(-5px);
+}
+
 .plan-header {
     text-align: center;
     margin-bottom: 24px;
