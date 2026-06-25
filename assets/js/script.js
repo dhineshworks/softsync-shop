@@ -1,3 +1,64 @@
+// Global Maintenance Modal & Interceptor
+function showMaintenanceAlert() {
+    let modal = document.getElementById('global-maintenance-modal');
+    if (!modal) {
+        const style = document.createElement('style');
+        style.innerHTML = `
+            #global-maintenance-modal {
+                position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+                z-index: 99999; display: flex; align-items: center; justify-content: center;
+                opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            }
+            #global-maintenance-modal.show { opacity: 1; pointer-events: auto; }
+            #global-maintenance-modal .modal-content {
+                background: rgba(15, 15, 20, 0.95); border: 1px solid rgba(239, 68, 68, 0.3);
+                padding: 30px; border-radius: 16px; width: 90%; max-width: 400px;
+                text-align: center; position: relative; transform: scale(0.9);
+                transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            }
+            #global-maintenance-modal.show .modal-content { transform: scale(1); }
+        `;
+        document.head.appendChild(style);
+
+        modal = document.createElement('div');
+        modal.id = 'global-maintenance-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;" onclick="document.getElementById('global-maintenance-modal').classList.remove('show')"><i class="fa-solid fa-xmark"></i></button>
+                <i class="fa-solid fa-database" style="color: #ef4444; font-size: 3rem; margin-bottom: 15px; text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);"></i>
+                <h2 style="color: #ef4444; margin: 0 0 10px 0; font-family: 'Outfit', sans-serif;">Database Error</h2>
+                <p style="color: #ccc; margin: 0 0 20px 0; line-height: 1.5; font-size: 0.95rem;">Our server is currently in maintenance. All contact methods are temporarily unavailable.</p>
+                <button style="background: #ef4444; color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onclick="document.getElementById('global-maintenance-modal').classList.remove('show')" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">I Understand</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        void modal.offsetWidth; // force reflow
+    }
+    modal.classList.add('show');
+}
+
+const originalWindowOpen = window.open;
+window.open = function(url, target, features) {
+    if (typeof url === 'string' && (url.startsWith('mailto:') || url.startsWith('tel:') || url.includes('wa.me') || url.includes('facebook.com') || url.includes('instagram.com'))) {
+        showMaintenanceAlert();
+        return null;
+    }
+    return originalWindowOpen(url, target, features);
+};
+
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (link) {
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('mailto:') || href.startsWith('tel:') || href.includes('wa.me') || href.includes('facebook.com') || href.includes('instagram.com')) {
+            e.preventDefault();
+            showMaintenanceAlert();
+        }
+    }
+});
+
 let currentLang = 'en';
 try {
     currentLang = localStorage.getItem('lang') || 'en';
